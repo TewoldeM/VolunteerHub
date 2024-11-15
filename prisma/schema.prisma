@@ -1,0 +1,155 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                  String         @id @default(uuid()) // Generates a UUID by default
+  email               String         @unique
+  password            String
+  createdAt           DateTime       @default(now())
+  failedLoginAttempts Int            @default(0)
+  isLocked            Boolean        @default(false)
+  lockUntil           DateTime?
+  roles               Role[]         @default([]) // e.g., "VOLUNTEER" or "ORGANIZATION_ADMIN"
+  applications        Application[]
+  organizations       Organization[] @relation("OrganizationOwner")
+}
+
+model Organization {
+  id            String                 @id @default(uuid()) // Generates a UUID by default
+  name          String                 @db.Text @unique
+  address       String? // Optional for initial creation
+  city          String? @db.Text // Optional for initial creation
+  province      String? @db.Text// Optional for initial creation
+  postalcode    String
+  country       String 
+  phone         String? // Optional for initial creation
+  website       String? // Optional for initial creation
+  linkedinURL   String? // Optional for initial creation
+  facebookURL   String? // Optional for initial creation
+  twitterURL    String? // Optional for initial creation
+  photo         String? 
+  mission       String? // Optional for initial creation
+  description   String? @db.Text
+  createdAt     DateTime               @default(now())
+  updatedAt     DateTime               @updatedAt
+  owner         User                   @relation("OrganizationOwner", fields: [ownerId], references: [id])
+  ownerId       String
+  opportunities Opportunity[]
+  events        Event[]
+  orgtype       OrganizationType // e.g., "NONPROFIT" or "NGO"
+  categories    OrganizationCategory[]
+  @@index([ownerId])
+}
+
+enum Category {
+  ADVOCACY_HUMAN_RIGHTS
+  ANIMALS
+  ARTS_CULTURE
+  BOARD_DEVELOPMENT
+  CHILDREN_YOUTH
+  COMMUNITY
+  COMPUTERS_TECHNOLOGY
+  CRISIS_SUPPORT
+  DISASTER_RELIEF
+  EDUCATION_LITERACY
+  EMERGENCY_SAFETY
+  EMPLOYMENT
+  ENVIRONMENT
+  FAITH_BASED
+  HEALTH_MEDICINE
+  HOMELESS_HOUSING
+  HUNGER
+  IMMIGRANTS_REFUGEES
+  INTERNATIONAL
+  JUSTICE_LEGAL
+  LGBTQ
+  MEDIA_BROADCASTING
+  PEOPLE_WITH_DISABILITIES
+  POLITICS
+  RACE_ETHNICITY
+  SENIORS
+  SPORTS_RECREATION
+  VETERANS_MILITARY_FAMILIES
+  WOMEN
+}
+
+model OrganizationCategory {
+  id             Int          @id @default(autoincrement())
+  organization   Organization @relation(fields: [organizationId], references: [id])
+  organizationId String // Updated to match the UUID type in Organization
+  category       Category
+}
+
+model Opportunity {
+  id             Int           @id @default(autoincrement())
+  title          String
+  description    String
+  location       String
+  date           DateTime
+  durationHours  Int
+  organization   Organization  @relation(fields: [organizationId], references: [id])
+  organizationId String // Updated to match the UUID type in Organization
+  applications   Application[]
+  @@index([organizationId])
+}
+
+model Application {
+  id            Int               @id @default(autoincrement())
+  user          User              @relation(fields: [userId], references: [id])
+  userId        String
+  opportunity   Opportunity       @relation(fields: [opportunityId], references: [id])
+  opportunityId Int
+  appliedAt     DateTime          @default(now())
+  status        ApplicationStatus @default(PENDING)
+  @@index([opportunityId])
+}
+
+model Event {
+  id             Int          @id @default(autoincrement())
+  title          String
+  description    String
+  date           DateTime
+  location       String
+  organization   Organization @relation(fields: [organizationId], references: [id])
+  organizationId String // Updated to match the UUID type in Organization
+  @@index([organizationId])
+}
+
+enum ApplicationStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+enum Role {
+  VOLUNTEER
+  ORGANIZATION_ADMIN
+}
+
+enum OrganizationType {
+  NONPROFIT
+  GOVERNMENT
+  SCHOOL
+  NGO
+}
+
+// Why You Need the OrganizationCategory Model
+// The OrganizationCategory model is essential in your case because it allows you to handle the many-to-many relationship between Organization and Category. Here’s why:
+
+// Many-to-Many Relationship: Since an organization can have multiple categories and potentially each category could belong to multiple organizations, you need a junction table (in this case, OrganizationCategory) to represent this relationship properly.
+
+// Easily Manage Selections: Using this model makes it easier to manage the categories associated with an organization. It allows you to add or remove categories from an organization without altering the core structure of either the Organization or Category models.
+// Notes:
+// OrganizationCategories: This model acts as a bridge between Organization and Category, allowing you to store multiple categories for each organization while keeping the category definitions constant and preventing any additions or removals from the category list.
+
+// User and Organization Relationship: Make sure the @relation annotations align correctly to represent the intended relationships between the models.
+
+// Categories in Organization: Each organization can now have multiple entries in the OrganizationCategory model, which maps to the static categories defined in the Category enum.
+
+// This design will provide you with the necessary flexibility to manage categories while keeping the category list immutable, as per your requirements.
