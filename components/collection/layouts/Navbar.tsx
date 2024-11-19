@@ -13,7 +13,7 @@ import { ModeToggle } from './ModelToggle';
 const items = [
   { label: "Find opportunities", link: "/Findopportunities" },
   { label: "Bussiness Solution", link: "/BussinessSolution" },
-  { label: "Recruit volunteers", link: "/VolunteerProfile/create-organazation"},
+  { label: "Recruit volunteers", link: "/VolunteerProfile/create-organization"},
   { label: "Sign up", link: "/sign-up"},
   { label: "Sign in", link: "/sign-in"},
 

@@ -2,7 +2,7 @@ import { NextResponse, NextRequest } from 'next/server';
 import { PrismaClient } from '@prisma/client';
 import { jwtVerify } from 'jose';
 const prisma = new PrismaClient();
-const JWT_SECRET = process.env.JWT_SECRET || 'your_jwt_secret';
+const JWT_SECRET = process.env.JWT_SECRET || "A5xj97s5GiJHD0518ZI02XjZPQU328";
 
 export async function POST(req: NextRequest) {
   const token = req.cookies.get("token")?.value;
@@ -31,13 +31,14 @@ export async function POST(req: NextRequest) {
         },
       },
     });
-
     return NextResponse.json({ id: newOrganization.id }, { status: 201 });
+
   } catch (error) {
-    console.error("[Error creating organization]", error);
+    // console.error("[Error creating organization]", error);
     return new NextResponse(
       "Internal Server Error while creating organization",
       { status: 500 }
     );
   }
 }
+

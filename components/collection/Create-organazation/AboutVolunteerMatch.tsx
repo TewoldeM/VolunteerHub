@@ -3,7 +3,7 @@ import { type ClassValue } from "clsx";
 
 const AboutVolunteerMatch = () => {
   return (
-    <div className="flex justify-center items-center p-20 gap-4 flex-col md:flex-row">
+    <div className="flex justify-center items-center p-0 gap-4 flex-col md:flex-row md:p-20">
       <div className="bg-green-300 w-1/3 h-80 rounded-full ">
         <img
           src="/OIP (2).jpg"
@@ -12,9 +12,9 @@ const AboutVolunteerMatch = () => {
         />
       </div>
       <div className="flex justify-center items-center gap-6 flex-col">
-        <h1 className="text-4xl font-semibold text-gray-800">VolunteerMatch transforms volunteer recruiting</h1>
-        <p className="flex justify-center items-center w-2/3 font-medium">
-          VolunteerMatch helps you effect positive change.you get volunteers
+        <h1 className="md:text-4xl font-semibold text-gray-800 text-xl p-2">VolunteerHub transforms volunteer recruiting</h1>
+        <p className="flex justify-center items-center w-2/3 font-medium text-gray-500">
+          VolunteerHub helps you effect positive change.you get volunteers
           matched with the right cause at the right moment. you get the a larger
           number of highly qulified volunteers because you are matched withe
           pepole who are both passionate about and committed to your type Class.{" "}
