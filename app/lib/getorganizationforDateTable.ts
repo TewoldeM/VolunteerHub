@@ -1,10 +1,11 @@
-// app/api/organizations/route.ts
+// api/organization/getorganizationforDateTables.ts
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/app/lib/db"; // Adjust the import path as necessary
 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const userId = searchParams.get("userId");
+
   if (!userId) {
     return NextResponse.json({ error: "User ID is required" }, { status: 400 });
   }

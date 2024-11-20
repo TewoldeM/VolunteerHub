@@ -1,5 +1,5 @@
-"use client";
-
+// OrganizationComponent.tsx
+"use client"
 import { useContext, useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { DataTable } from "@/components/collection/Create-organazation/DataTable";
@@ -9,7 +9,7 @@ import Link from "next/link";
 import { Organization, Opportunity } from "@prisma/client";
 
 const OrganizationComponent = () => {
-  const { userId, email } = useContext(AuthContext);
+  const { userId, name } = useContext(AuthContext);
   const [organizations, setOrganizations] = useState<
     (Organization & { opportunities: Opportunity[] })[]
   >([]);
@@ -45,7 +45,7 @@ const OrganizationComponent = () => {
         </Button>
       </Link>
       <div className="mt-5">
-        <DataTable columns={columns(email || "N/A")} data={organizations} />
+        <DataTable columns={columns(name || "N/A")} data={organizations} />
       </div>
     </div>
   );

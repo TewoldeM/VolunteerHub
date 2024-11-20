@@ -9,8 +9,14 @@ export async function middleware(req: NextRequest) {
     try {
       const secret = new TextEncoder().encode(JWT_SECRET);
       const result = await jwtVerify(token, secret);
-      const payload = result.payload as { id: string; roles: string[] };
+      const payload = result.payload as {
+        id: string;
+        roles: string[];
+        name: string;
+      }; // Include name in the payload
       req.nextUrl.searchParams.set("userId", payload.id); // Attach userId to the request
+      req.nextUrl.searchParams.set("name", payload.name); // Attach name to the request
+
       const pathname = req.nextUrl.pathname;
       if (pathname.startsWith("/VolunteerProfile/create-organization")) {
         return NextResponse.next();

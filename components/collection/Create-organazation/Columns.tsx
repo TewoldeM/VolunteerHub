@@ -14,7 +14,7 @@ type OrganizationWithOpportunities = Organization & {
 
 export const columns = (
   defaultContact: string
-): ColumnDef<OrganizationWithOpportunities>[] => [  
+): ColumnDef<OrganizationWithOpportunities>[] => [
   {
     accessorKey: "name",
     header: ({ column }) => (
