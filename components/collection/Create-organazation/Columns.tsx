@@ -6,11 +6,10 @@ import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { Organization, Opportunity } from "@prisma/client"; // Import Opportunity type
 import { Button } from "@/components/ui/button";
+import { OrganizationWithOpportunities } from "@/type/organizationwithopprtunity";
 
 // Create a new type that includes opportunities
-type OrganizationWithOpportunities = Organization & {
-  opportunities: Opportunity[];
-};
+
 
 export const columns = (
   defaultContact: string
@@ -27,7 +26,7 @@ export const columns = (
       </Button>
     ),
     cell: ({ row }) => {
-      return <div>{row.getValue("name")}</div>;
+      return <div className="ml-4">{row.getValue("name")}</div>;
     },
   },
   {
@@ -39,7 +38,7 @@ export const columns = (
       </div>
     ),
     cell: () => {
-      return <div className="text-gray-700">{defaultContact}</div>;
+      return <div className="dark:text-gray-200">{defaultContact}</div>;
     },
   },
   {
@@ -57,7 +56,7 @@ export const columns = (
       const hasActiveOpportunities = row.original.opportunities.length > 0;
       return (
         <Badge
-          className={`${
+          className={` ml-5 ${
             hasActiveOpportunities
               ? "text-green-600 bg-green-50"
               : "text-red-600 bg-red-50 p-2 hover:bg-red-300"

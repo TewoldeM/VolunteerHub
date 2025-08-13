@@ -25,6 +25,7 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import Image from "next/image";
 import { Category } from "@prisma/client";
+import Tiptap from "../../Reuseable/Tiptap";
 
 const formSchema = z.object({
   title: z.string().min(2, "title is required"),
@@ -41,15 +42,15 @@ const CreateOppform1 = () => {
   });
   const onSubmit = async (values: z.infer<typeof formSchema>) => {};
   return (
-    <div className="flex flex-col items-center justify-center p-4 ">
-      <h1 className="text-gray-800 text-3xl p-2">
+    <div className="flex flex-col items-center justify-center  p-4 ">
+      <h1 className="text-gray-600 dark:text-white text-3xl p-2">
         Tell us About Your Opportunity
       </h1>
       <Form {...form}>
         <React.Fragment>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="space-y-8 mt-10 bg-slate-200 p-6"
+            className="space-y-8 mt-10 dark:border-gray-500 border-2 p-6"
           >
             <FormField
               control={form.control}
@@ -63,7 +64,7 @@ const CreateOppform1 = () => {
                     <Input
                       placeholder="Opportunities title here"
                       {...field}
-                      className="text-black flex-none  py-2 px-36 border border-gray-900 rounded-none bg-white"
+                      className="text-black flex-none  py-2 px-36 border dark:border-gray-500 rounded-none "
                     />
                   </FormControl>
                   <FormMessage />
@@ -79,11 +80,10 @@ const CreateOppform1 = () => {
                     Description <span className="text-red-500">*</span>
                   </FormLabel>
                   <FormControl>
-                    <Textarea
-                      placeholder="Description"
-                      {...field}
-                      className="text-black flex-none  py-2 px-36 border border-gray-900 rounded-none bg-white"
-                    />
+                    {/* <Tiptap
+                       
+                    description={""} {...field}                      // className="text-black flex-none  py-2 px-36 border border-gray-900 rounded-none bg-white"
+                    /> */}
                   </FormControl>
                   <FormMessage />
                 </FormItem>

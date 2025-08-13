@@ -26,8 +26,13 @@ import { Textarea } from "@/components/ui/textarea";
 import Image from "next/image";
 import { Category } from "@prisma/client";
 import Countryselector from "../../Reuseable/Countr-selector";
+import Link from "next/link";
+import Tiptap from "../../Reuseable/Tiptap";
+import { Card } from "@/components/ui/card";
 
 const formSchema = z.object({
+  title: z.string().min(2, "title is required"),
+  description: z.string(),
   country: z.string(),
   address: z.string(),
   city: z.string(),
@@ -36,9 +41,12 @@ const formSchema = z.object({
 });
 
 const CreateOppLocation = () => {
+  const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
+      title: "",
+      description: "",
       country: "",
       address: "",
       city: "",
@@ -46,16 +54,66 @@ const CreateOppLocation = () => {
       zipcode: 12,
     },
   });
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {};
+const onSubmit = async (values: z.infer<typeof formSchema>) => {
+  try {
+    const response = await axios.post("/api/opportunity/create/About", values);
+    if (response.status === 201) {
+      toast.success("Opportunity about created successfully");
+      // Redirect to the next step
+      router.push("/VolunteerProfile/Opportunity/CreateopportunityDetials");
+    } else {
+      toast.error("Failed to create opportunity about");
+    }
+  } catch (error) {
+    console.error(error);
+    toast.error("Error creating opportunity about");
+  }
+};
   return (
-    <div className="flex flex-col items-center justify-center shadow-lg p-4 ">
-      <h1 className="text-xl mt-8 font-semibold">Fill location Detils</h1>
+    <Card className="flex flex-col justify-center items-center md:w-1/2 pb-2 ">
+      <h1 className="text-gray-600 dark:text-white text-xl md:text-3xl p-2 ">
+        Tell us About Your Opportunity
+      </h1>
       <Form {...form}>
         <React.Fragment>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="space-y-8 mt-10 bg-slate-200 p-6"
+            className="space-y-8 mt-4 p-6"
           >
+            <FormField
+              control={form.control}
+              name="title"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>
+                    Title<span className="text-red-500">*</span>
+                  </FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="Ex:Washing Cloth"
+                      {...field}
+                      className="text-black flex-none  py-2 px-10 border-2 dark:border-gray-500 rounded-none "
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="description"
+              render={({ field }) => (
+                <FormItem className=" mb-4">
+                  <FormLabel>
+                    Description <span className="text-red-500">*</span>
+                  </FormLabel>
+                  <FormControl>
+                    <Tiptap description={""} {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
             <FormField
               control={form.control}
               name="country"
@@ -64,7 +122,7 @@ const CreateOppLocation = () => {
                   <FormLabel>
                     Country <span className="text-red-500">*</span>
                   </FormLabel>
-                  <FormControl>
+                  <FormControl className="dark:border-gray-500 border-2 dark:bg-slate-800 dark:text-white">
                     <Countryselector
                       value={field.value}
                       onChange={(country) => {
@@ -88,7 +146,7 @@ const CreateOppLocation = () => {
                     <Input
                       placeholder="Ex: Addis ababa"
                       {...field}
-                      className="text-black flex-none  py-2 px-10 border border-gray-900 rounded-none bg-white"
+                      className="text-black flex-none  py-2 px-10 border-2 dark:border-gray-500 rounded-none "
                     />
                   </FormControl>
                   <FormMessage />
@@ -108,14 +166,14 @@ const CreateOppLocation = () => {
                     <Textarea
                       placeholder="Ex: Bole, woreda 12"
                       {...field}
-                      className="text-black flex-none  py-2 px-10 border border-gray-900 rounded-none bg-white"
+                      className="text-black flex-none  py-2 px-10 border-2 drak:border-gray-900 rounded-none"
                     />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            <div className="flex justify-center items-center  md:flex-row gap-4">
+            <div className="flex flex-col justify-center items-center md:flex-row gap-4">
               <FormField
                 name="state"
                 control={form.control}
@@ -129,7 +187,7 @@ const CreateOppLocation = () => {
                         {...field}
                         value={field.value ?? ""}
                         placeholder="Province"
-                        className="text-black flex-none  py-2 px-10 border border-gray-900 rounded-none bg-white"
+                        className="text-black flex-none  py-2 px-10 border-2 dark:border-gray-500 rounded-md"
                       />
                     </FormControl>
                     <FormMessage />
@@ -148,7 +206,7 @@ const CreateOppLocation = () => {
                         {...field}
                         value={field.value ?? ""}
                         placeholder="postalcode"
-                        className="text-black flex-none  py-2 px-10 border border-gray-900 rounded-none bg-white"
+                        className="text-black dark:text-gray-200 flex-none  py-2 px-10 border-2 dark:border-gray-500 rounded-md"
                       />
                     </FormControl>
                     <FormMessage />
@@ -159,18 +217,21 @@ const CreateOppLocation = () => {
           </form>
         </React.Fragment>
       </Form>
-      <div className=" flex flex-row justify-center items-center ml-56 md:ml-96 mt-4">
-        <span className="text-blue-800 hover:text-blue-500 cursor-pointer text-xl">
+      <div className=" flex flex-row justify-start items-center gap-4 md:-ml-80">
+        <button className=" hover:text-green-600 font-bold md:py-2 px-4 ">
           Save Draft
-        </span>
-        <Button
-          type="submit"
-          className=" ml-4 mb-2 px-6 bg-blue-600 hover:bg-blue-300 "
-        >
-          Next
-        </Button>
+        </button>
+        <Link href="/VolunteerProfile/Opportunity/CreateopportunityDateTime">
+          <Button
+            className={cn(
+              "bg-green-500 hover:bg-green-400  font-bold py-2 px-4 rounded-r-full text-white"
+            )}
+          >
+            Next
+          </Button>
+        </Link>
       </div>
-    </div>
+    </Card>
   );
 };
 export default CreateOppLocation;

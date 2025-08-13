@@ -1,10 +1,7 @@
-// OrganizationComponent.tsx
 "use client"
 import { useContext, useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { DataTable } from "@/components/collection/Create-organazation/DataTable";
-import { columns } from "@/components/collection/Create-organazation/Columns";
-import AuthContext from "@/app/lib/AuthContext";
+
 import Link from "next/link";
 import { Organization, Opportunity } from "@prisma/client";
 
@@ -34,6 +31,37 @@ const OrganizationComponent = () => {
     fetchOrganizations();
   }, [userId]);
 
+  if (!organizations.length) {
+    return (
+      <div className="flex flex-col justify-center px-6 py-4 gap-10">
+        <div className="flex flex-row justify-between px-10">
+          <Link href="/VolunteerProfile/create-organization" passHref>
+            <Button
+              type="button"
+              className="bg-blue-500 text-yellow-50 hover:bg-blue-300"
+            >
+              Create New Organization
+            </Button>
+          </Link>
+          <Link
+            href="/VolunteerProfile/Opportunity/Create-opportunity-About"
+            passHref
+          >
+            <Button
+              type="button"
+              className="bg-blue-500 text-yellow-50 hover:bg-blue-300"
+            >
+              Post Opportunity
+            </Button>
+          </Link>
+        </div>
+        <div className="mt-5">
+          <div className="text-blue-400">Loading...</div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="flex flex-col justify-center px-6 py-4 gap-10">
       <Link href="/VolunteerProfile/create-organization" passHref>
@@ -44,8 +72,13 @@ const OrganizationComponent = () => {
           Create New Organization
         </Button>
       </Link>
-      <div className="mt-5">
-        <DataTable columns={columns(name || "N/A")} data={organizations} />
+      <div className="flex justify-center items-center">
+        {organizations.map((organization) => (
+          <div key={organization.id}>
+            <h2>{organization.name}</h2>
+            <p>Opportunities:</p>
+          </div>
+        ))}
       </div>
     </div>
   );

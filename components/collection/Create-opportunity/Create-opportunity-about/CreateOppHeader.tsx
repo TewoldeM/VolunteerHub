@@ -1,47 +1,76 @@
-import React from 'react'
+"use client"
+import { ArrowBigRight } from "lucide-react";
+import React from "react";
+import { usePathname } from "next/navigation";
+import { Separator } from "@/components/ui/separator";
+
 
 const CreateOppHeader = () => {
+  const pathname = usePathname();
+  const [currentPath, setCurrentPath] = React.useState(pathname);
+
+  React.useEffect(() => {
+    setCurrentPath(pathname);
+  }, [pathname]);
+
+  const bgColor = currentPath !== pathname ? "bg-red-800" : "bg-green-400";
+
   return (
-    <div>
-      <div className="flex flex-col justify-center items-center">
-        <div className="flex flex-col justify-center items-center gap-4">
-          <h1 className="text-4xl ">Post Opportunity</h1>
-          <div className="flex flex-row gap-12 p-4">
-            <div className="flex flex-col justify-center items-center gap-4">
-              <span className="text-4xl text-blue-400 px-6 py-4 rounded-full bg-gray-300 hover:bg-blue-400 cursor-pointer hover:text-white">
-                1
-              </span>
-              <div className="text-xl">Aboute</div>
+    <div className="mt-12">
+      <div className="flex flex-col justify-center">
+        <div className="flex flex-col justify-center gap-4">
+          <h1 className="text-4xl text-foreground text-green-700 ml-6">
+            Post Opportunity
+          </h1>
+          {/* <Separator className="w-80" /> */}
+          <div className="flex flex-row md:gap-0 p-4">
+            <div className="flex flex-col justify-center items-center ">
+              <div
+                className={`text-sm md:text-lg ${bgColor} p-1 md:p-4 text-white rounded-sm cursor-pointer`}
+              >
+                Aboute
+              </div>
             </div>
-            <div className="flex flex-col justify-center items-center gap-4">
-              <span className="text-4xl text-blue-400 px-6 py-4 rounded-full bg-gray-300 hover:bg-blue-400 cursor-pointer hover:text-white">
-                2
-              </span>
-              <div className="text-xl">Date/Time</div>
+            <ArrowBigRight className="flex justify-center items-center  mt-2 w-2 h-2 md:w-10 md:h-10 text-green-400" />
+            <div className="flex flex-col justify-center items-center ">
+              <div
+                className={`text-sm md:text-lg ${bgColor} p-1 md:p-4 text-white rounded-sm cursor-pointer`}
+              >
+                Date/Time
+              </div>
             </div>
-            <div className="flex flex-col justify-center items-center gap-4">
-              <span className="text-4xl text-blue-400 px-6 py-4 rounded-full bg-gray-300 hover:bg-blue-400 cursor-pointer hover:text-white">
-                3
-              </span>
-              <div className="text-xl">Detial</div>
+            <ArrowBigRight className="flex justify-center items-center  mt-2 w-2 h-2 md:w-10 md:h-10 text-green-400" />
+
+            <div className="flex flex-col justify-center items-center ">
+              <div
+                className={`text-sm md:text-lg ${bgColor} p-1 md:p-4 text-white rounded-sm cursor-pointer`}
+              >
+                Detial
+              </div>
             </div>
-            <div className="flex flex-col justify-center items-center gap-4">
-              <span className="text-4xl text-blue-400 px-6 py-4 rounded-full bg-gray-300 hover:bg-blue-400 cursor-pointer hover:text-white">
-                4
-              </span>
-              <div className="text-xl">Filters</div>
+            <ArrowBigRight className="flex justify-center items-center  mt-2 w-2 h-2 md:w-10 md:h-10 text-green-400" />
+
+            <div className="flex flex-col justify-center items-center ">
+              <div
+                className={`text-sm md:text-lg ${bgColor} p-1 md:p-4 text-white rounded-sm cursor-pointer`}
+              >
+                Filters
+              </div>
             </div>
-            <div className="flex flex-col justify-center items-center gap-4">
-              <span className="text-4xl text-blue-400 px-6 py-4 rounded-full bg-gray-300 hover:bg-blue-400 cursor-pointer hover:text-white">
-                5
-              </span>
-              <div className="text-xl">Comms</div>
+            <ArrowBigRight className="flex justify-center items-center  mt-2 w-2 h-2 md:w-10 md:h-10 text-green-400" />
+
+            <div className="flex flex-col justify-center items-center ">
+              <div
+                className={`text-sm md:text-lg ${bgColor} p-1 md:p-4 text-white rounded-sm cursor-pointer`}
+              >
+                Comms
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
   );
-}
+};
 
-export default CreateOppHeader
+export default CreateOppHeader;

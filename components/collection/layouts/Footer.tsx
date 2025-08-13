@@ -3,19 +3,19 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <div className="flex flex-col md:flex-row justify-between items-center p-32 gap-8 bg-gray-200 ">
+    <div className="flex flex-col md:flex-row justify-between items-center p-32 gap-8 border-t-2 border-gray-600">
       <div className="flex flex-row gap-14 md:gap-64 items-center justify-center">
         <div className="">
           <div className="flex flex-col gap-4 ">
             <h2 className="text-xl font-bold">Company</h2>
-            <h3 className="cursor-pointer text-gray-800 font-semibold">
+            <h3 className="cursor-pointer  font-semibold">
               About
             </h3>
-            <h3 className="cursor-pointer text-gray-800 font-semibold">Term</h3>
-            <h3 className="cursor-pointer text-gray-800 font-semibold">
+            <h3 className="cursor-pointer  font-semibold">Term</h3>
+            <h3 className="cursor-pointer  font-semibold">
               Press
             </h3>
-            <h3 className="cursor-pointer text-gray-800 font-semibold">
+            <h3 className="cursor-pointer  font-semibold">
               Technology and parties
             </h3>
           </div>
@@ -23,14 +23,14 @@ const Footer = () => {
         <div className="">
           <div className="flex flex-col gap-4 ">
             <h2 className="text-xl font-bold">Resource</h2>
-            <h3 className="cursor-pointer text-gray-800 font-semibold">
+            <h3 className="cursor-pointer  font-semibold">
               About
             </h3>
-            <h3 className="cursor-pointer text-gray-800 font-semibold">Term</h3>
-            <h3 className="cursor-pointer text-gray-800 font-semibold">
+            <h3 className="cursor-pointer  font-semibold">Term</h3>
+            <h3 className="cursor-pointer  font-semibold">
               Press
             </h3>
-            <h3 className="cursor-pointer text-gray-800 font-semibold">
+            <h3 className="cursor-pointer  font-semibold">
               Technology and parties
             </h3>
           </div>

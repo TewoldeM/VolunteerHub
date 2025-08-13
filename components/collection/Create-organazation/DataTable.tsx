@@ -1,4 +1,3 @@
-// DataTable.tsx
 import { Button } from "@/components/ui/button";
 import {
   ColumnDef,
@@ -21,12 +20,12 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useState } from "react";
+import { Opportunity, Organization } from "@prisma/client";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
 }
-
 export function DataTable<TData, TValue>({
   columns,
   data,
@@ -48,6 +47,14 @@ export function DataTable<TData, TValue>({
     },
   });
 
+  if (!data.length) {
+    return (
+      <div>
+        <div className="text-red-600">Loading...</div>
+      </div>
+    );
+  }
+
   return (
     <div>
       <div className="flex items-center py-4">
@@ -57,7 +64,7 @@ export function DataTable<TData, TValue>({
           onChange={(event) =>
             table.getColumn("name")?.setFilterValue(event.target.value)
           }
-          className="max-w-sm text-black"
+          className="max-w-sm dark:text-gray-100"
         />
       </div>
       <div className="rounded-md border">

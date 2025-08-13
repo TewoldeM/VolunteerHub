@@ -1,12 +1,11 @@
-// CategoryList.tsx
 import { useState } from "react";
 import { Category } from "@prisma/client";
+import { Card } from "@/components/ui/card";
 
 interface CategoryListProps {
   selectedCategories: Category[];
   handleCategoryChange: (category: Category) => void;
 }
-
 const categories = [
   Category.ADVOCACY_HUMAN_RIGHTS,
   Category.ANIMALS,
@@ -38,7 +37,6 @@ const categories = [
   Category.VETERANS_MILITARY_FAMILIES,
   Category.WOMEN,
 ];
-
 const categoryNames = {
   [Category.ADVOCACY_HUMAN_RIGHTS]: "Advocacy & Human Rights",
   [Category.ANIMALS]: "Animals",
@@ -70,36 +68,77 @@ const categoryNames = {
   [Category.VETERANS_MILITARY_FAMILIES]: "Veterans & Military Families",
   [Category.WOMEN]: "Women",
 };
+const CategoryList = ({selectedCategories,  handleCategoryChange,}: CategoryListProps) => {
+  const [selected, setSelected] = useState(selectedCategories);
+  const [searchTerm, setSearchTerm] = useState("");
 
-const CategoryList = ({
-  selectedCategories,
-  handleCategoryChange,
-}: CategoryListProps) => {
+  const handleSelect = (category: Category) => {
+    if (selected.includes(category)) {
+      setSelected(selected.filter((cat) => cat !== category));
+    } else if (selected.length < 5) {
+      setSelected([...selected, category]);
+    }
+    handleCategoryChange(category);
+  };
+
+  const filteredCategories = categories.filter((category) =>
+    categoryNames[category].toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
-    <div className="flex flex-row gap-12 space-y-4 ml-60">
-      <div className="flex flex-col overflow-y-auto h-96 md:p-4 border-2 border-blue-50 w-96">
-        {categories.map((category) => (
+    //className="flex flex-col md:flex-row  gap-12 space-y-4  px-4"
+    //flex flex-col overflow-y-auto h-96 md:p-2 border-2 border-blue-50 w-96
+
+    <Card className="flex flex-col md:flex-row gap-12 space-y-4 px-4">
+      <div className="flex flex-col overflow-y-auto h-96 w-72 ">
+        <input
+          type="search"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          placeholder="Search categories"
+          className="p-2 border border-gray-400 rounded mb-4"
+        />
+        {filteredCategories.map((category) => (
           <div
             key={category}
-            className={`flex items-center space-x-2 p-4 cursor-pointer hover:bg-blue-100 ${
-              selectedCategories.includes(category) ? "bg-blue-300" : ""
+            className={`flex items-center space-x-2 p-2 border-b border-gray-300 cursor-pointer hover:bg-blue-100 dark:hover:bg-gray-700 ${
+              selected.includes(category)
+                ? "bg-blue-300 border border-b-2 dark:bg-gray-800"
+                : ""
             }`}
-            onClick={() => handleCategoryChange(category)}
+            onClick={() => handleSelect(category)}
           >
             <span>{categoryNames[category]}</span>
-            {selectedCategories.includes(category) && <span>✔️</span>}
+            {selected.includes(category) && <span>✅</span>}
           </div>
         ))}
       </div>
       <div className="mt-4">
         <h3 className="font-bold">Selected Categories:</h3>
-        <ul className="list-disc list-inside">
-          {selectedCategories.map((category) => (
-            <li key={category}>{categoryNames[category]}</li>
+        <ul className="list-disc list-inside bg-gray-100">
+          {selected.map((category) => (
+            <li
+              key={category}
+              className="list-none flex items-center justify-betweenv border border-b-1 p-2 dark:bg-gray-800 dark:border-b-1 border-gray-400"
+            >
+              <span className="w-52">{categoryNames[category]}</span>
+              <button
+                className="text-red-500"
+                onClick={() => handleSelect(category)}
+              >
+                ❌
+              </button>
+            </li>
           ))}
         </ul>
+        {selected.length < 1 && (
+          <p className="text-red-500">Please select at least one category</p>
+        )}
+        {selected.length >= 5 && (
+          <p className="text-red-500">You can only select up to 5 categories</p>
+        )}
       </div>
-    </div>
+    </Card>
   );
 };
 

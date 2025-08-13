@@ -8,118 +8,195 @@ datasource db {
 }
 
 model User {
-  id                  String         @id @default(uuid()) // Generates a UUID by default
-  name                String         @db.Text
-  email               String         @unique
-  password            String
-  createdAt           DateTime       @default(now())
-  failedLoginAttempts Int            @default(0)
-  isLocked            Boolean        @default(false)
-  lockUntil           DateTime?
-  roles               Role[]         @default([]) // e.g., "VOLUNTEER" or "ORGANIZATION_ADMIN"
-  applications        Application[]
-  organizations       Organization[] @relation("OrganizationOwner")
+  id                    String                     @id @default(uuid())
+  name                  String                     @db.Text
+  token                 String?
+  email                 String                     @unique
+  password              String
+  createdAt             DateTime                   @default(now())
+  failedLoginAttempts   Int                        @default(0)
+  isLocked              Boolean                    @default(false)
+  lockUntil             DateTime?
+  roles                 Role[]                     @default([VOLUNTEER])
+  applications          Application[]
+  organizations         Organization[]             @relation("OrganizationOwner")
+  orgApplications       OrganizationApplication[]  @relation("OrgApplicant")
+  verifiedDocs          VerificationDocument[]     @relation("VerifiedBy")
+  reviewedApplications  OrganizationApplication[]  @relation("ReviewedBy")
+
+  @@index([email])
 }
 
 model Organization {
-  id            String                 @id @default(uuid()) // Generates a UUID by default
-  name          String                 @db.Text @unique
-  address       String? // Optional for initial creation
-  city          String? @db.Text // Optional for initial creation
-  province      String? @db.Text// Optional for initial creation
-  postalcode    String
-  country       String 
-  phone         String? // Optional for initial creation
-  website       String? // Optional for initial creation
-  linkedinURL   String? // Optional for initial creation
-  facebookURL   String? // Optional for initial creation
-  twitterURL    String? // Optional for initial creation
-  photo         String? 
-  mission       String? // Optional for initial creation
-  description   String? @db.Text
-  createdAt     DateTime               @default(now())
-  updatedAt     DateTime               @updatedAt
-  owner         User                   @relation("OrganizationOwner", fields: [ownerId], references: [id])
-  ownerId       String
-  opportunities Opportunity[]
-  events        Event[]
-  orgtype       OrganizationType // e.g., "NONPROFIT" or "NGO"
-  categories    OrganizationCategory[]
+  id                   String                      @id @default(uuid())
+  name                 String                      @unique @db.Text
+  address              String?
+  city                 String?                     @db.Text
+  province             String?                     @db.Text
+  postalcode           String
+  country              String
+  phone                String?
+  website              String?
+  linkedinURL          String?
+  facebookURL          String?
+  twitterURL           String?
+  photo                String?
+  mission              String?
+  description          String?                     @db.Text
+  createdAt            DateTime                    @default(now())
+  updatedAt            DateTime                    @updatedAt
+  owner                User                        @relation("OrganizationOwner", fields: [ownerId], references: [id])
+  ownerId              String
+  opportunities        Opportunity[]
+  events               Event[]
+  orgtype              OrganizationType
+  categories           OrganizationCategory[]
+  verificationStatus   VerificationStatus          @default(PENDING)
+  verificationDocs     VerificationDocument[]
+  orgApplication       OrganizationApplication?    @relation("OrgApplication")
+
   @@index([ownerId])
 }
 
-enum Category {
-  ADVOCACY_HUMAN_RIGHTS
-  ANIMALS
-  ARTS_CULTURE
-  BOARD_DEVELOPMENT
-  CHILDREN_YOUTH
-  COMMUNITY
-  COMPUTERS_TECHNOLOGY
-  CRISIS_SUPPORT
-  DISASTER_RELIEF
-  EDUCATION_LITERACY
-  EMERGENCY_SAFETY
-  EMPLOYMENT
-  ENVIRONMENT
-  FAITH_BASED
-  HEALTH_MEDICINE
-  HOMELESS_HOUSING
-  HUNGER
-  IMMIGRANTS_REFUGEES
-  INTERNATIONAL
-  JUSTICE_LEGAL
-  LGBTQ
-  MEDIA_BROADCASTING
-  PEOPLE_WITH_DISABILITIES
-  POLITICS
-  RACE_ETHNICITY
-  SENIORS
-  SPORTS_RECREATION
-  VETERANS_MILITARY_FAMILIES
-  WOMEN
+model OrganizationApplication {
+  id             Int                           @id @default(autoincrement())
+  applicant      User                          @relation("OrgApplicant", fields: [applicantId], references: [id])
+  applicantId    String
+  organization   Organization                  @relation("OrgApplication", fields: [organizationId], references: [id])
+  organizationId String                        @unique
+  status         ApplicationStatus             @default(PENDING)
+  appliedAt      DateTime                      @default(now())
+  reviewedAt     DateTime?
+  reviewedBy     User?                         @relation("ReviewedBy", fields: [reviewedById], references: [id])
+  reviewedById   String?
+  documents      VerificationDocument[]
+
+  @@index([applicantId, organizationId])
 }
 
-model OrganizationCategory {
-  id             Int          @id @default(autoincrement())
-  organization   Organization @relation(fields: [organizationId], references: [id])
-  organizationId String // Updated to match the UUID type in Organization
-  category       Category
-}
+model VerificationDocument {
+  id                Int                        @id @default(autoincrement())
+  organization      Organization               @relation(fields: [organizationId], references: [id])
+  organizationId    String
+  orgApplication    OrganizationApplication?   @relation(fields: [orgApplicationId], references: [id])
+  orgApplicationId  Int?
+  documentType      DocumentType
+  documentPath      String                     // Path to locally stored document
+  uploadedAt        DateTime                   @default(now())
+  verifiedAt        DateTime?
+  verifiedBy        User?                      @relation("VerifiedBy", fields: [verifiedById], references: [id])
+  verifiedById      String?
 
-model Opportunity {
-  id             Int           @id @default(autoincrement())
-  title          String
-  description    String
-  location       String
-  date           DateTime
-  durationHours  Int
-  organization   Organization  @relation(fields: [organizationId], references: [id])
-  organizationId String // Updated to match the UUID type in Organization
-  applications   Application[]
   @@index([organizationId])
 }
 
+model OrganizationCategory {
+  id             Int           @id @default(autoincrement())
+  organization   Organization  @relation(fields: [organizationId], references: [id])
+  organizationId String
+  category       Category
+
+  @@index([organizationId])
+}
+
+model Opportunity {
+  id              String         @id @default(uuid())
+  about           About          @relation(fields: [aboutId], references: [id])
+  aboutId         String
+  datetime        Datetime       @relation(fields: [datetimeId], references: [id])
+  datetimeId      String
+  details         Details        @relation(fields: [detailsId], references: [id])
+  detailsId       String
+  filters         Filters        @relation(fields: [filtersId], references: [id])
+  filtersId       String
+  communication   Communication  @relation(fields: [communicationId], references: [id])
+  communicationId String
+  Organization    Organization?  @relation(fields: [organizationId], references: [id])
+  organizationId  String?
+  Application     Application[]
+
+  @@index([organizationId])
+}
+
+model About {
+  id            String       @id @default(uuid())
+  title         String
+  description   String
+  location      Location     @relation(fields: [locationId], references: [id])
+  locationId    String
+  opportunities Opportunity[]
+}
+
+model Location {
+  id         String     @id @default(uuid())
+  country    String
+  city       String
+  address    String
+  state      String
+  zipcode    String
+  about      About[]
+  events     Event[]
+}
+
+model Datetime {
+  id               String        @id @default(uuid())
+  hasSpecificDates Boolean
+  startDate        DateTime?
+  endDate          DateTime?
+  startTime        DateTime?
+  endTime          DateTime?
+  hasShifts        Boolean
+  opportunities    Opportunity[]
+}
+
+model Details {
+  id              String        @id @default(uuid())
+  skillsRequired  String[]      @default([])
+  commitmentHours Int?
+  isVirtual       Boolean       @default(false)
+  minAge          Int?
+  opportunities   Opportunity[]
+}
+
+model Filters {
+  id             String       @id @default(uuid())
+  categories     Category[]   @default([])
+  isVirtual      Boolean?
+  locationRadius Int?
+  opportunities  Opportunity[]
+}
+
+model Communication {
+  id              String        @id @default(cuid())
+  contactEmail    String?
+  contactPhone    String?
+  preferredMethod String?
+  opportunities   Opportunity[]
+}
+
 model Application {
-  id            Int               @id @default(autoincrement())
-  user          User              @relation(fields: [userId], references: [id])
-  userId        String
-  opportunity   Opportunity       @relation(fields: [opportunityId], references: [id])
-  opportunityId Int
-  appliedAt     DateTime          @default(now())
-  status        ApplicationStatus @default(PENDING)
+  id             Int               @id @default(autoincrement())
+  user           User              @relation(fields: [userId], references: [id])
+  userId         String
+  opportunity    Opportunity       @relation(fields: [opportunityId], references: [id])
+  opportunityId  String
+  appliedAt      DateTime          @default(now())
+  status         ApplicationStatus @default(PENDING)
+
   @@index([opportunityId])
 }
 
 model Event {
-  id             Int          @id @default(autoincrement())
+  id             Int           @id @default(autoincrement())
   title          String
   description    String
   date           DateTime
-  location       String
-  organization   Organization @relation(fields: [organizationId], references: [id])
-  organizationId String // Updated to match the UUID type in Organization
-  @@index([organizationId])
+  location       Location      @relation(fields: [locationId], references: [id])
+  locationId     String
+  organization   Organization  @relation(fields: [organizationId], references: [id])
+  organizationId String
+
+  @@index([organizationId, locationId])
 }
 
 enum ApplicationStatus {
@@ -130,7 +207,7 @@ enum ApplicationStatus {
 
 enum Role {
   VOLUNTEER
-  ORGANIZATION_ADMIN
+  SUPER_ADMIN
 }
 
 enum OrganizationType {
@@ -138,6 +215,30 @@ enum OrganizationType {
   GOVERNMENT
   SCHOOL
   NGO
+}
+
+enum VerificationStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+enum DocumentType {
+  TAX_ID
+  REGISTRATION_CERTIFICATE
+  NONPROFIT_STATUS
+  OTHER
+}
+
+enum Category {
+  EDUCATION
+  HEALTH
+  ENVIRONMENT
+  ANIMAL_WELFARE
+  ARTS
+  SPORTS
+  COMMUNITY
+  OTHER
 }
 
 // Why You Need the OrganizationCategory Model

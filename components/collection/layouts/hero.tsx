@@ -1,49 +1,59 @@
-// components/collection/hero.tsx
+
 import { Button } from "@/components/ui/button";
+import { HeroHighlight,Highlight } from "@/components/ui/hero-highlight";
 import { cn } from "@/lib/utils";
-import Image from "next/image";
+import { motion } from "framer-motion";
+;
+import { FaLocationArrow } from "react-icons/fa6";
+import MagicButton from "@/components/collection/Reuseable/MagicButton"
+import { User } from "@prisma/client";
 
 interface HeroProps {
-  user: any; // Define a more specific type based on your user data
+  user: User | null; // Define a more specific type based on your user data
 }
 
 const Hero: React.FC<HeroProps> = ({ user }) => {
   return (
     <div className="hero">
-      {user ? (
-        <h1 className="text-muted-foreground text-2xl text-purple-400 p-4">
-          Welcome back To VolunteerHub!
-        </h1>
-      ) : (
-        <h1>Welcome to our platform!</h1>
-      )}
-      <div className="flex flex-col justify-center items-center h-screen bg-red-300">
-        <div className="bg-gray-100 h-full w-full flex flex-col gap-8 justify-start px-2 md:px-24 py-10">
-          <div className="flex justify-center items-center mb-4">
-            <input
-              type="search"
-              placeholder="Search by postalcode..."
-              className="w-1/2 h-10 pl-10 p-6 text-sm text-gray-700 rounded-l-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-600"
-            />
+      <HeroHighlight className="flex justify-center items-center flex-col gap-8">
+        {user ? (
+          <h1 className="text-7xl text-blue-200">
+            Welcome back { user.name}!
+          </h1>
+        ) : (
+          <h1>Welcome to our platform!</h1>
+        )}
+        <motion.h1
+          initial={{
+            opacity: 0,
+            y: 20,
+          }}
+          animate={{
+            opacity: 1,
+            y: [20, -5, 0],
+          }}
+          transition={{
+            duration: 0.5,
+            ease: [0.4, 0.0, 0.2, 1],
+          }}
+          className="text-2xl px-4 md:text-4xl lg:text-5xl font-bold text-neutral-700 dark:text-white max-w-4xl leading-relaxed lg:leading-snug text-center mx-auto "
+        >
+          VolunteerHub The largest nonprofit network connecting volunteers with
+          endless opportunities
+          <Highlight className="text-black dark:text-white">
+            to make a difference.
+          </Highlight>
+        </motion.h1>
 
-            <Button
-              type="button"
-              className={cn(
-                "rounded-none w-1/4 h-10 p-6 text-lg text-white bg-blue-500 hover:bg-blue-700 rounded-r-lg border border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-600"
-              )}
-            >
-              Search
-            </Button>
-          </div>
-          <img
-            src="/image7.png"
-            alt="Home page image"
-            className="w-full h-full object-cover rounded shadow-md"
-          />
-        </div>
-      </div>
+        <MagicButton
+          title="Show my work"
+          icon={<FaLocationArrow />}
+          position="right"
+        />
+      </HeroHighlight>
     </div>
   );
 };
+// VolunteerMatch: The largest nonprofit network connecting volunteers with endless opportunities to make a difference
 
 export default Hero;

@@ -5,7 +5,6 @@ import Footer from "@/components/collection/layouts/Footer";
 import Navbar from "@/components/collection/layouts/Navbar";
 import { Toaster } from "@/components/ui/sonner";
 import { ThemeProvider } from "@/components/collection/layouts/ThemeProvider";
-import AuthProvider from "@/components/collection/Reuseable/AuthProvider";
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
@@ -28,19 +27,19 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <AuthProvider>
+    // <AuthProvider>
       <html lang="en">
         <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
           <Toaster richColors position="bottom-right" />
-          {/* <ThemeProvider attribute="class" defaultTheme="system"> */}
+          {/* <ThemeProvider> */}
           <Navbar />
           {children}
           <Footer />
           {/* </ThemeProvider> */}
         </body>
       </html>
-    </AuthProvider>
+    // </AuthProvider>
   );
 }
