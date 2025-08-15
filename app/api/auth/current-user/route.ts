@@ -1,45 +1,60 @@
-// app/api/auth/current-user/route.ts
-import { NextRequest, NextResponse } from 'next/server';
-import jwt from 'jsonwebtoken';
-import { PrismaClient } from '@prisma/client';
+import { NextRequest, NextResponse } from "next/server";
+import { PrismaClient } from "@prisma/client";
+import { jwtVerify, JWTPayload } from "jose";
 
 const prisma = new PrismaClient();
 const JWT_SECRET = process.env.JWT_SECRET || "A5xj97s5GiJHD0518ZI02XjZPQU328";
 
-// Set runtime to Node.js instead of Edge
-export const config = {
-  runtime: 'nodejs', // Ensure this API runs on the Node.js runtime
-};
-
 export async function GET(req: NextRequest) {
+  const token = req.cookies.get("token")?.value;
+
+  if (!token) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
   try {
-    // Retrieve token from headers instead of cookies
-    const authHeader = req.headers.get("authorization");
-    const token = authHeader?.split(" ")[1];
+    const secret = new TextEncoder().encode(JWT_SECRET);
+    const { payload } = await jwtVerify(token, secret, { clockTolerance: 30 });
+    const userId = (payload as JWTPayload & { id?: string })?.id;
 
-    if (!token) {
-      return NextResponse.json({ message: "User not authenticated" }, { status: 401 });
-    }
-
-    // Verify token using jsonwebtoken in Node.js runtime
-    const decoded = jwt.verify(token, JWT_SECRET) as { id: number };
-
-    if (!decoded || !decoded.id) {
-      return NextResponse.json({ message: "User not authenticated" }, { status: 401 });
+    if (!userId) {
+      console.log(
+        "User ID not found or invalid in token payload in /api/auth/me:",
+        payload
+      );
+      return NextResponse.json(
+        { error: "Invalid token: Missing or invalid user ID" },
+        { status: 401 }
+      );
     }
 
     const user = await prisma.user.findUnique({
-      where: { id: decoded.id.toString() },
-      select: { id: true, email: true },
+      where: { id: userId },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        roles: true,
+        PasswordResetToken:true,
+      },
     });
 
     if (!user) {
-      return NextResponse.json({ message: "User not found" }, { status: 404 });
+      console.log("User not found for ID:", userId, "in /api/auth/me");
+      return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
 
-    return NextResponse.json(user);
+    return NextResponse.json(
+      {
+        user,
+        token, // Return the current token
+        refreshToken: user.PasswordResetToken || null, // Return the refresh token
+      },
+      { status: 200 }
+    );
   } catch (error) {
-    console.error("Error fetching current user:", error);
-    return NextResponse.json({ message: "Internal server error" }, { status: 500 });
+    console.error("Error verifying token in /api/auth/me:", error);
+  } finally {
+    await prisma.$disconnect();
   }
 }

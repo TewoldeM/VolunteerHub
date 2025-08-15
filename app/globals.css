@@ -29,6 +29,10 @@
     --chart-3: 197 37% 24%;
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
+    /* Add custom orange colors */
+    --orange-primary: 24 100% 50%; /* Example: vibrant orange */
+    --orange-light: 24 100% 75%; /* Example: lighter orange */
+    --orange-dark: 24 100% 25%; /* Example: darker orange */
   }
 
   .dark {
@@ -46,7 +50,7 @@
     --muted-foreground: 240 5% 64.9%;
     --accent: 240 3.7% 15.9%;
     --accent-foreground: 0 0% 98%;
-    --destructive: 0 62.8% 30.6%;
+    --destructive: 0 62.Featured: 30.6%;
     --destructive-foreground: 0 0% 98%;
     --border: 240 3.7% 15.9%;
     --input: 240 3.7% 15.9%;
@@ -56,16 +60,19 @@
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
+    /* Add custom orange colors for dark mode */
+    --orange-primary: 24 100% 60%; /* Example: slightly lighter orange for dark mode */
+    --orange-light: 24 100% 85%; /* Example: very light orange */
+    --orange-dark: 24 100% 35%; /* Example: darker orange for dark mode */
+    --orange-medium:24 100% 50%; /* Example: medium orange */
   }
+
   .border-client {
-  border: 1px solid #ccc; /* adjust the border style as needed */
-}
+    border: 1px solid #ccc; /* adjust the border style as needed */
+  }
 }
 
 @layer base {
-  * {
-    @apply border-border;
-  }
   body {
     @apply bg-background text-foreground;
   }

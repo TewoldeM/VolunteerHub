@@ -33,7 +33,7 @@ const AboutVolunteerMatch = () => {
             fast, easy-to-use and effective
           </p>
           <div className="md:ml-96 ml-20 mt-4">
-            <Button className={cn("p-6")}>
+            <Button className={cn("p-6 bg-orange-700 hover:bg-orange-500 text-white")}>
               Get Started
             </Button>
           </div>

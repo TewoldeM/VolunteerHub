@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import Footer from "@/components/collection/layouts/Footer";
-import Navbar from "@/components/collection/layouts/Navbar";
 import { Toaster } from "@/components/ui/sonner";
-import { ThemeProvider } from "@/components/collection/layouts/ThemeProvider";
+import Providers from "@/components/collection/Providers/Providers";
+import ServerNavbar from "./Navbar-server/page";
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
@@ -28,18 +28,54 @@ export default function RootLayout({
 }>) {
   return (
     // <AuthProvider>
-      <html lang="en">
-        <body
+    <html lang="en">
+      <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-        >
-          <Toaster richColors position="bottom-right" />
-          {/* <ThemeProvider> */}
-          <Navbar />
-          {children}
-          <Footer />
-          {/* </ThemeProvider> */}
-        </body>
-      </html>
+      >
+        <Providers>
+          <ServerNavbar />
+    
+             {/* <Toaster
+              position="bottom-right"
+              toastOptions={{
+                duration: 5000,
+                style: {
+                  borderRadius: "8px",
+                  padding: "16px",
+                  fontSize: "16px",
+                },
+                success: {
+                  style: {
+                    background: "#10B981", // Original green background
+                    color: "#BBF7D0", // Light green text
+                    border: "1px solid #059669",
+                  },
+                  iconTheme: {
+                    primary: "#FFFFFF", // White icon for success
+                    secondary: "#10B981",
+                  },
+                },
+                error: {
+                  style: {
+                    background: "#EF4444", // Original red background
+                    color: "#FECACA", // Light red text
+                    border: "1px solid #DC2626",
+                  },
+                  iconTheme: {
+                    primary: "#FCA5A5", // Light red icon (red-300)
+                    secondary: "#EF4444", // Matches the background
+                  },
+                  className: "error-toast",
+                },
+              }}
+            />  */}
+            {children}
+            <Footer />{" "}
+    
+        </Providers>
+        {/* </ThemeProvider> */}
+      </body>
+    </html>
     // </AuthProvider>
   );
 }

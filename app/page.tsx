@@ -2,12 +2,15 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import Cliamyourorg from "@/components/collection/Create-organazation/Cliamyourorg";
-import AboutVolunteerMatch from "@/components/collection/Create-organazation/AboutVolunteerMatch";
 import StepstoJoin from "@/components/collection/Create-organazation/StepstoJoin";
 import Hero from "@/components/collection/layouts/hero";
 import { User } from "@prisma/client";
 import { Separator } from "@/components/ui/separator";
+import OpportunityFinder from "@/components/collection/Create-organazation/OpportunityFinder";
+import AboutVolunteer from "@/components/collection/Create-organazation/AboutVolunteer";
+import Onboarding from "@/components/collection/Create-organazation/Onboarding";
+import VolunterServices from "@/components/collection/Create-organazation/VolunterServices";
+import OpportunityFinder2 from "@/components/collection/Create-organazation/OpportunityFinder2";
 
 // Helper function to get cookie by name
 function getCookie(name: string): string | null {
@@ -73,11 +76,16 @@ export default function Home() {
   return (
     <div>
       <Hero user={user} />
-      <Cliamyourorg />
+      <OpportunityFinder />
+      <OpportunityFinder2 /> 
+      <Onboarding />
+      <AboutVolunteer />
+      {/* <Cliamyourorg /> */}
       <Separator />
-      <AboutVolunteerMatch />
+      <VolunterServices />
+      {/* <AboutVolunteerMatch /> */}
       <Separator />
-      <StepstoJoin />
+      {/* <StepstoJoin /> */}
     </div>
   );
 }

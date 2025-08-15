@@ -1,4 +1,5 @@
 "use client";
+
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
@@ -43,12 +44,12 @@ const SignIn = () => {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen">
+    <div className="flex justify-center items-center min-h-screen p-4 max-[649px]:p-2">
       <form
         onSubmit={handleSubmit}
-        className="p-8 rounded-lg shadow-xl w-1/3 border-2 dark:border-gray-600"
+        className="p-6 rounded-lg shadow-xl w-1/3 max-[649px]:w-full max-[649px]:p-4 border-2 dark:border-gray-600"
       >
-        <h2 className="text-3xl font-bold mb-4">Login</h2>
+        <h2 className="text-3xl font-bold mb-4 max-[649px]:text-2xl">Login</h2>
         <div className="mb-4">
           <label
             className="block text-gray-700 dark:text-white text-sm font-bold mb-2"
@@ -85,22 +86,22 @@ const SignIn = () => {
         </div>
         <Button
           type="submit"
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          className="bg-orangePrimary hover:bg-orangeDark text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline max-[649px]:text-sm"
         >
           Login
         </Button>
         <div className="mt-4">
           <Link href="/reset-password">
-            <span className="text-gray-700 dark:text-white hover:text-blue-500">
+            <span className="text-gray-700 dark:text-white hover:text-orangePrimary text-sm">
               Forgot password?
             </span>
           </Link>
         </div>
-        <div className="mt-4 text-gray-700 dark:text-white">
+        <div className="mt-4 text-gray-700 dark:text-white text-sm">
           Don't have an account?
         </div>
         <Link href="/sign-up" className="mb-4">
-          <Button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+          <Button className="bg-orangePrimary hover:bg-orangeDark text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline max-[649px]:text-sm">
             Sign Up
           </Button>
         </Link>

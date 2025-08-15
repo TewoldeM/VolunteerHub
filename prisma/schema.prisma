@@ -17,13 +17,17 @@ model User {
   failedLoginAttempts   Int                        @default(0)
   isLocked              Boolean                    @default(false)
   lockUntil             DateTime?
+  IsBlocked            Boolean        @default(false) // Permanent block (admin action)
+  ResetToken           String? // For Email verification
+  ResetTokenExpires    DateTime? // Expiration time for Email verification token
   roles                 Role[]                     @default([VOLUNTEER])
   applications          Application[]
   organizations         Organization[]             @relation("OrganizationOwner")
   orgApplications       OrganizationApplication[]  @relation("OrgApplicant")
   verifiedDocs          VerificationDocument[]     @relation("VerifiedBy")
   reviewedApplications  OrganizationApplication[]  @relation("ReviewedBy")
-
+  PasswordResetToken   String? // For forgot password functionality
+  PasswordResetExpires DateTime? // Expiration time for password reset token
   @@index([email])
 }
 
