@@ -9,7 +9,7 @@ import {
 
 export default function VolunterServices() {
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-orange-50 dark:bg-gray-950 p-4 sm:p-6 md:p-8 lg:p-12">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-orange-50 dark:bg-gray-950 p-4 sm:p-6 md:p-8 lg:p-12 mx-12">
       <div className="flex">
         <h1 className="font-bold mb-8 text-4xl text-orange-400">Services</h1>
       </div>

@@ -13,10 +13,10 @@ const navGroups = [
 
 const Home: React.FC = () => {
   return (
-    <div className="mx-2">
+    <div className="mx-12">
       <div className="min-h-screen bg-white flex flex-col items-center gap-44">
         {/* Header Section */}
-        <header className="w-full mt-40 bg-gradient-to-r from-orange-600 to-orange-400 text-white p-6 rounded-b-lg flex items-center justify-between">
+        <header className="w-full mt-40 bg-gradient-to-r from-orange-600 to-orange-200 text-white p-6 rounded-b-lg flex items-center justify-between">
           <div className="flex-1">
             <h1 className="text-4xl font-bold">
               Contact Us for Legal Assistance

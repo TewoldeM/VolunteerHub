@@ -1,41 +1,30 @@
-"use client";
+import { redirect } from "next/navigation";
 
-import { useRouter } from "next/navigation";
-import { LogOut, UserPlus, LogIn, Download } from "lucide-react";
+const Logout = async () => {
+  try {
+    const baseUrl =
+      process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:3000";
+    const res = await fetch(`${baseUrl}/api/auth/logout`, {
+      method: "DELETE",
+      credentials: "include",
+    });
 
-const Logout = () => {
-  const router = useRouter();
-
-  const handleLogout = async () => {
-    try {
-      const res = await fetch("/api/auth/logout", {
-        method: "DELETE",
-        credentials: "include",
-      });
-
-      if (res.ok) {
-        router.push("/sign-up");
-      } else {
-        console.error("Failed to logout");
-      }
-    } catch (err) {
-      console.error("An error occurred during logout:", err);
+    if (!res.ok) {
+      console.error("Failed to logout:", await res.text());
+      return { error: "Failed to logout" };
     }
-  };
 
+    // Redirect to sign-in page on successful logout
+    redirect("/sign-in");
+  } catch (err:any) {
+    // Only log unexpected errors, not NEXT_REDIRECT
+    if (err.message !== "NEXT_REDIRECT") {
+      console.error("An error occurred during logout:", err);
+      return { error: "An error occurred during logout" };
+    }
+    // Rethrow NEXT_REDIRECT to allow Next.js to handle the redirect
+    throw err;
+  }
+};
 
-
-  return (
-    <div className="flex items-center justify-center gap-4 p-4 bg-gray-50 rounded-lg">
-      <button
-        onClick={handleLogout}
-        className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-red-500 rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-colors"
-      >
-        <LogOut className="w-4 h-4" />
-        Logout
-      </button>
-    </div>
-  );
-}
-
-export default Logout
+export default Logout;

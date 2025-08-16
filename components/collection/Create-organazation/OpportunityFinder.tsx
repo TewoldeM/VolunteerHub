@@ -3,18 +3,18 @@ import Image from "next/image";
 
 export default function Home() {
   return (
-    <div className="relative mx-12 mt-6 h-[400px] overflow-hidden">
+    <div className="relative mx-12 mt-6 h-[400px] overflow-hidden bg-orange-50 mb-4">
       {/* Background Image */}
-      <Image
+      {/* <Image
         src="/istockphoto-1437885539-612x612.webp"
         alt="Background of volunteers helping"
         fill
         className="object-cover brightness-75"
         priority
-      />
+      /> */}
 
       {/* Overlay Content */}
-      <div className="absolute inset-0 flex flex-col justify-center items-center text-white font-semibold px-4">
+      <div className="absolute inset-0 flex flex-col justify-center items-center text-black font-semibold px-4">
         <div className="w-full max-w-7xl mx-auto px-8 md:px-16 lg:px-32 text-center">
           {/* Increased padding: px-8 (small screens), md:px-16 (medium), lg:px-32 (large) */}
           {/* Title */}

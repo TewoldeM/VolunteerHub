@@ -2,14 +2,14 @@ import Image from "next/image";
 
 export default function Home() {
   return (
-    <div className="flex flex-col md:flex-row items-center justify-between p-6 md:p-12 bg-orange-50 dark:bg-black min-h-screen">
+    <div className="flex flex-col md:flex-row items-center justify-between p-6 md:p-12 bg-orange-50 dark:bg-black min-h-screen mx-12 mt-4">
       {/* Left Section - Text */}
       <div className="md:w-1/2 text-left space-y-6">
         <p className="text-sm text-gray-500 dark:text-white">
           From Start to Success:
         </p>
         <h1 className="text-4xl md:text-5xl font-bold text-orange-700 dark:text-white">
-          Your Onboarding and Training Journey with VolunteerHub
+          Your Onboarding and Training Journey with VolunteerLink
         </h1>
         <div className="space-y-6">
           <div>
@@ -18,7 +18,7 @@ export default function Home() {
             </h2>
             <p className="text-gray-600 dark:text-white max-w-lg">
               Onboarding ensures a seamless transition, equipping you with the
-              knowledge and tools to effectively use VolunteerHub.
+              knowledge and tools to effectively use VolunteerLink.
             </p>
             <a href="#" className="text-orange-600 hover:underline">
               Learn more →

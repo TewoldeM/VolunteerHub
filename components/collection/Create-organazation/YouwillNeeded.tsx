@@ -1,105 +1,88 @@
-"use client"
-import {
-  ArrowRight,
-  GraduationCap,
-  HeartHandshake,
-  HomeIcon,
-  LucideGlobe,
-} from "lucide-react";
-import React, { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
-import CreateOrganizationDialog from "./CreateOrganization/CreateOrganizationDialog";
+"use client";
+import { ArrowUp, ArrowDown, HeartHandshake } from "lucide-react";
+import { useState } from "react";
+import Image from "next/image";
 
 const YouWillNeeded = () => {
-  const [open, setOpen] = useState(false);
-  const [selectedOrgType, setSelectedOrgType] = useState<string>("");
+  const [showText, setShowText] = useState({ first: false, second: false });
 
-  const items = [
-    {
-      icon: <HeartHandshake size={80} />,
-      label: "501(c) Nonprofits",
-      hoverText: "Supporting certified nonprofits.",
-      orgType: "NONPROFIT",
-    },
-    {
-      icon: <HomeIcon size={80} />,
-      label: "Gov't, Hospice, State-Level",
-      hoverText: "Public sector partnerships.",
-      orgType: "GOVERNMENT",
-    },
-    {
-      icon: <GraduationCap size={80} />,
-      label: "Schools and University",
-      hoverText: "Educational institutions support.",
-      orgType: "SCHOOL",
-    },
-    {
-      icon: <LucideGlobe size={80} />,
-      label: "Non-Ethiopian NGO",
-      hoverText: "Connecting with global NGOs.",
-      orgType: "NGO",
-    },
-  ];
-
-  const handleOpenDialog = (orgType:string) => {
-    setSelectedOrgType(orgType);
-    setOpen(true);
+  const toggleText = (index: "first" | "second") => {
+    setShowText((prev) => ({ ...prev, [index]: !prev[index] }));
   };
 
   return (
-    <div className="flex flex-col items-center p-20 space-y-10 mb-14">
-      <h1 className="text-4xl border-b-4 border-green-500 text-center p-2">
-        You Will Needed
-      </h1>
-      <ul className="text-center  text-xl space-y-4">
-        <span className="flex justify-center items-center gap-2 flex-row">
-          <ArrowRight />
-          <li className="">
-            Have your mission statement and organization description handy
-          </li>
-        </span>
-        <span className="flex justify-center items-center gap-2 flex-row">
-          <ArrowRight className="-ml-4 text-red-300" />
-          <li className="">
-            If you are a non-profit (501(c)), be sure to have your EIN ready
-          </li>
-        </span>
-      </ul>
-      <h1 className="text-6xl  text-center mt-10">Start Here</h1>
-
-      <div className="flex flex-wrap gap-8 justify-center mt-6">
-        {items.map((item, index) => (
-          <div
-            key={index}
-            className="relative p-6 w-48 h-64 flex flex-col items-center cursor-pointer"
-          >
-            <div className="flex justify-center items-center dark:bg-gray-900 
-            rounded-full p-4 hover:bg-opacity-90 text-green-300 border-1 border-green-500">
-              {item.icon}
-            </div>
-            <span className="mt-4 text-xl  text-center">
-              {item.label}
-            </span>
-            <div className="mt-8">
-                   <Button
-                variant={"outline"}
-                className="border-emerald-500 bg-emerald-500 text-white hover:bg-emerald-900 hover:text-white"
-              
-                onClick={() => handleOpenDialog(item.orgType)}>
-              
-                Select
-              </Button>
-            </div>
-          </div>
-        ))}
+    <div className="flex flex-col items-center justify-center py-12 px-4">
+      <h1 className="text-4xl p-2 text-orange-400 mb-4">You Will Needed</h1>
+      <div className="flex flex-col md:flex-row items-center justify-between w-full md:px-20 md:py-20">
+        <div className="md:w-2/3 gap-20 max-w-2xl">
+          <ul className="flex flex-col text-start justify-start text-xl mt-4 gap-4">
+            <li className="flex flex-col p-8 mb-2 bg-orange-100 rounded-lg hover:bg-orange-300 transition-all duration-300 ease-in-out hover:scale-105">
+              <div className="flex items-center justify-between">
+                <span className="flex items-center gap-2 p-2">
+                  <HeartHandshake size={24} className="text-orange-500" />
+                  Have your mission statement and organization description handy
+                </span>
+                {showText.first ? (
+                  <ArrowUp
+                    size={24}
+                    className="text-orange-500 cursor-pointer"
+                    onClick={() => toggleText("first")}
+                  />
+                ) : (
+                  <ArrowDown
+                    size={24}
+                    className="text-orange-500 cursor-pointer"
+                    onClick={() => toggleText("first")}
+                  />
+                )}
+              </div>
+              {showText.first && (
+                <p className="mt-2 text-gray-700">
+                  Additional details: Please ensure your mission statement is
+                  concise and reflects your organization's goals.
+                </p>
+              )}
+            </li>
+            <li className="flex flex-col p-8 bg-orange-100 rounded-lg hover:bg-orange-300 transition-all duration-300 ease-in-out hover:scale-105">
+              <div className="flex items-center justify-between">
+                <span className="flex items-center gap-2 p-2">
+                  <HeartHandshake size={24} className="text-orange-500" />
+                  If you are a non-profit (501(c)), be sure to have your EIN
+                  ready
+                </span>
+                {showText.second ? (
+                  <ArrowUp
+                    size={24}
+                    className="text-orange-500 cursor-pointer"
+                    onClick={() => toggleText("second")}
+                  />
+                ) : (
+                  <ArrowDown
+                    size={24}
+                    className="text-orange-500 cursor-pointer"
+                    onClick={() => toggleText("second")}
+                  />
+                )}
+              </div>
+              {showText.second && (
+                <p className="mt-2 text-gray-700">
+                  Additional details: Your EIN (Employer Identification Number)
+                  is required for verification purposes.
+                </p>
+              )}
+            </li>
+          </ul>
+        </div>
+        <div className="md:w-1/3 flex justify-center items-center border-2 border-orange-300 py-8 mt-4 md:mt-0">
+          <Image
+            src="/istockphoto-1437885539-612x612.webp"
+            alt="Organization Illustration"
+            className="w-full max-w-xs rounded-full"
+            width={300}
+            height={300}
+          />
+        </div>
       </div>
-
-      <CreateOrganizationDialog
-        open={open}
-        onOpenChange={setOpen}
-        selectedOrgType={selectedOrgType}
-      />
     </div>
   );
 };

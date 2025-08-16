@@ -11,6 +11,7 @@ import { cn } from "@/lib/utils";
 import { DataTable } from "@/components/collection/Create-organazation/DataTable";
 import { columns } from "@/components/collection/Create-organazation/Columns";
 import { OrganizationWithOpportunities } from "@/type/organizationwithopprtunity";
+import GetStarted from "@/components/collection/Create-organazation/GetStarted";
 
 const CreateOrganaztion = () => {
   const { user, loading, error } = useCurrentUser();
@@ -18,7 +19,7 @@ const CreateOrganaztion = () => {
     OrganizationWithOpportunities[]
   >([]);
   const router = useRouter();
-
+  
   useEffect(() => {
     if (user) {
       const fetchOrganizations = async () => {
@@ -39,11 +40,19 @@ const CreateOrganaztion = () => {
   const handleDashboardofOrganization = () => {
     router.push("/VolunteerProfile/DashboardofOrganization");
   };
- const handleCreateAnotherOrganization = () => {
+  const handleCreateAnotherOrganization = () => {
     router.push("/VolunteerProfile/CreateAnotherOrganization");
- };
-  if (loading) return <div className="flex justify-center items-center h-screen ">Loading...</div>;
-  if (error) return <div className="flex justify-center items-center">Error: {error}</div>;
+  };
+  if (loading)
+    return (
+      <div className="flex justify-center items-center h-screen ">
+        Loading...
+      </div>
+    );
+  if (error)
+    return (
+      <div className="flex justify-center items-center">Error: {error}</div>
+    );
 
   return (
     <div className="mt-32 mb-14 flex flex-col justify-center items-center">
@@ -57,9 +66,10 @@ const CreateOrganaztion = () => {
           </Button>
         </div>
       ) : (
-        <div>
-          <Createorganazation />
-          <YouwillNeeded />
+        <div className="">
+            <Createorganazation />
+            <YouwillNeeded />
+            <GetStarted />
         </div>
       )}
     </div>

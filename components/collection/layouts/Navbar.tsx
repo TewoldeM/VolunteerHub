@@ -50,7 +50,7 @@ const navGroups = [
     items: [
       {
         label: "Volunteer Recruitment",
-        link: "/organizations/volunteer-management/recruitment",
+        link: "/VolunteerProfile/createorganization",
         icon: Users,
       },
       {
@@ -100,12 +100,15 @@ function MobileNavBar() {
   const router = useRouter();
 
   return (
-    <div className="block bg-orange-900 text-gray-300 md:hidden">
+    <div className="block bg-orange-600 text-gray-300 md:hidden">
       <nav className="container flex items-center justify-between px-4 py-2">
+        <div className="flex h-[60px] items-center">
+          <Logo />
+        </div>
         <Sheet open={isOpen} onOpenChange={setIsOpen}>
           <SheetTrigger asChild>
             <Button variant="ghost" size="icon" className="text-white">
-              <Menu className="text-orange-500" />
+              <Menu className="text-white-500" />
             </Button>
           </SheetTrigger>
           <SheetContent
@@ -130,29 +133,6 @@ function MobileNavBar() {
             </div>
           </SheetContent>
         </Sheet>
-        <div className="flex h-[60px] items-center">
-          <Logo />
-        </div>
-        <div className="flex items-center gap-2">
-          <Button
-            onClick={() => router.push("/sign-in")}
-            className="bg-gray-500 text-white hover:bg-gray-600"
-          >
-            <LogIn className="mr-2 h-4 w-4 text-orange-500" /> Log In
-          </Button>
-          <Button
-            onClick={() => router.push("/sign-up")}
-            className="bg-gray-700 text-white hover:bg-gray-600"
-          >
-            <UserPlus className="mr-2 h-4 w-4 text-orange-500" /> Sign Up
-          </Button>
-          <Button
-            onClick={() => router.push("/logout")}
-            className="bg-red-700 text-white hover:bg-red-900 border-2 border-gray-100"
-          >
-            <LogOut className="mr-2 h-4 w-4 text-orange-500" /> Logout
-          </Button>
-        </div>
       </nav>
     </div>
   );
