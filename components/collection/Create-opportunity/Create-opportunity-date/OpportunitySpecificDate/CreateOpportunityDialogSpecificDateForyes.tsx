@@ -33,13 +33,13 @@ import DatePicker from "../../../Reuseable/DatePicker";
 import Select from "react-select";
 
 interface CreateOpportunityDialogProps {
-  open: boolean;
-  setOpen: (arg: boolean) => void;
+  opendate: boolean;
+  setOpendate: (arg: boolean) => void;
 }
 
 const CreateOpportunityDialogSpecificDateForyes = ({
-  open,
-  setOpen,
+  opendate,
+  setOpendate,
 }: CreateOpportunityDialogProps) => {
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
@@ -86,7 +86,7 @@ const CreateOpportunityDialogSpecificDateForyes = ({
   const onSubmit = async (data: z.infer<typeof formSchema>) => {};
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={opendate} onOpenChange={setOpendate}>
       <DialogTrigger asChild>xxxx</DialogTrigger>
       <DialogContent className="max-w-2xl">
         <DialogHeader>

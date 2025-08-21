@@ -3,7 +3,7 @@ import Image from "next/image";
 
 export default function Home() {
   return (
-    <div className="relative mx-12 mt-6 h-[400px] overflow-hidden bg-orange-50 mb-4">
+    <div className="relative mx-12 mt-6 h-[400px] overflow-hidden bg-orange-50 mb-12">
       {/* Background Image */}
       {/* <Image
         src="/istockphoto-1437885539-612x612.webp"

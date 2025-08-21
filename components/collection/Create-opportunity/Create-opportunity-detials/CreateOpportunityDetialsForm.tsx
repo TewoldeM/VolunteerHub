@@ -88,18 +88,22 @@ const CreateOpportunityDetialsForm = ({ open, setOpen }: DialogProps) => {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="flex justify-center items-center flex-col space-y-8 mt-28
-         p-4 md:w-1/2  md:ml-96 shadow-md py-4
+          className="flex justify-center items-center flex-col space-y-8 
+         p-4 md:w-1/2  md:ml-96 shadow-md py-4 bg-orange-50
         "
         >
           <div className="flex justify-center flex-col gap-4 px-32">
-            <h1 className="text-2xl">Let us know what you need</h1>
+            <h1 className="md:text-2xl text-xl text-orange-700">
+              Let us know what you need
+            </h1>
             <FormField
               control={form.control}
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Estimated # Volunteers Needed</FormLabel>
+                  <FormLabel className="text-orange-400">
+                    Estimated # Volunteers Needed
+                  </FormLabel>
                   <FormControl>
                     <Input
                       placeholder="10"
@@ -112,16 +116,15 @@ const CreateOpportunityDetialsForm = ({ open, setOpen }: DialogProps) => {
               )}
             />
           </div>
-          <div className="flex flex-row items-center justify-center ml-10 mt-4 bg-blue-200 p-2">
+          <div className="flex flex-row items-center justify-center ml-10 mt-4 bg-orange-100 p-2">
             <AlertCircle className="w-8 h-8 text-yellow-500 mr-2" />
-            <div className="text-sm text-gray-600">
+            <div className="text-sm text-orange-500 max-w-xl p-2">
               This will be considered an "ongoing" opportunity, and will be
-              active for 90 days once you publish it. <br />
-              In the future, to change the expiration date of an active
-              opportunity.
+              active for 90 days once you publish it. In the future, to change
+              the expiration date of an active opportunity.
             </div>
           </div>
-          <h1 className="">
+          <h1 className="text-orange-500 text-lg max-w-xl">
             Deactivate opportunity once total number of estimated volunteers
             needed is met?
           </h1>
@@ -150,13 +153,15 @@ const CreateOpportunityDetialsForm = ({ open, setOpen }: DialogProps) => {
             ))}
           </div>
 
-          <Separator className={cn("bg-green-300")} />
+          <Separator className={cn("bg-orange-300")} />
           <div className="flex flex-col justify-center items-center gap-6">
-            <h1 className="text-3xl -ml-80  md:-ml-96">Requirements</h1>
+            <h1 className="text-3xl -ml-80  md:-ml-96 text-orange-700">
+              Requirements
+            </h1>
             <span className="flex flex-col justify-center items-center gap-4">
-              <h1 className="">
+              <h1 className="text-orange-500 max-w-xl text-lg">
                 Is this a "DONE IN A DAY" opportunity? Note: "DONE IN A DAY"
-                opportunities <br /> Do not require prior training or an ongoing
+                opportunities Do not require prior training or an ongoing
                 commitment.
               </h1>
               <div className="flex flex-wrap gap-4 justify-center">
@@ -196,7 +201,9 @@ const CreateOpportunityDetialsForm = ({ open, setOpen }: DialogProps) => {
             </span>
           </div>
           <div className="flex flex-col justify-center items-center gap-8">
-            <h1 className="-ml-64 md:-ml-80">THE FOLLOWING ARE REQUIRED:</h1>
+            <h1 className="-ml-64 md:-ml-80 text-orange-700 text-lg">
+              THE FOLLOWING ARE REQUIRED:
+            </h1>
             <div className="flex flex-wrap gap-20 justify-center">
               {ItemsChuck.map((itemChuckData, index) => (
                 <div
@@ -216,7 +223,9 @@ const CreateOpportunityDetialsForm = ({ open, setOpen }: DialogProps) => {
                       handleOpenDialog(itemChuckData.label);
                     }}
                   />
-                  <span className="text-xl ">{itemChuckData.label}</span>
+                  <span className="text-xl text-orange-400">
+                    {itemChuckData.label}
+                  </span>
                 </div>
               ))}
             </div>
@@ -228,11 +237,11 @@ const CreateOpportunityDetialsForm = ({ open, setOpen }: DialogProps) => {
               name="miniage"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>MINIMUM AGE</FormLabel>
+                  <FormLabel className="text-orange-500">MINIMUM AGE</FormLabel>
                   <FormControl>
-                    <Input {...field} className="px-48" />
+                    <Input {...field} className="px-48  " />
                   </FormControl>
-                  <FormDescription>
+                  <FormDescription className="text-orange-400">
                     This is your public display name.
                   </FormDescription>
                   <FormMessage />
@@ -244,11 +253,16 @@ const CreateOpportunityDetialsForm = ({ open, setOpen }: DialogProps) => {
               name="timeCommitment"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>TIME COMMITMENT</FormLabel>
+                  <FormLabel className="text-orange-500">
+                    TIME COMMITMENT
+                  </FormLabel>
                   <FormControl>
-                    <Input {...field} className="px-48" />
+                    <Input {...field} className="px-48 " />
                   </FormControl>
-                  <FormDescription>250 characters max..</FormDescription>
+                  <FormDescription className="text-orange-400">
+                    {" "}
+                    250 characters max..
+                  </FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
@@ -258,29 +272,33 @@ const CreateOpportunityDetialsForm = ({ open, setOpen }: DialogProps) => {
               name="otherrequirment"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>OTHER REQUIREMENTS</FormLabel>
+                  <FormLabel className="text-orange-500">
+                    OTHER REQUIREMENTS
+                  </FormLabel>
                   <FormControl>
-                    <Input {...field} className="px-48" />
+                    <Input {...field} className="px-48 " />
                   </FormControl>
-                  <FormDescription>250 characters max..</FormDescription>
+                  <FormDescription className="text-orange-400">
+                    250 characters max..
+                  </FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
             />
           </div>
-          <div className="flex justify-between items-center gap-24 md:gap-64">
+          <div className="flex justify-between items-center py-6 md:gap-56">
             <Link href="/VolunteerProfile/Opportunity/CreateopportunityDateTime">
-              <Button className="bg-green-500 hover:bg-green-400  font-bold py-2 px-4 rounded-l-full text-white">
+              <Button className="bg-orange-500 hover:bg-orange-400  font-bold px-4 py-6 rounded-l-full text-white">
                 Previous
               </Button>
             </Link>
 
             <div className="flex justify-end">
-              <button className=" hover:text-green-600 font-bold md:py-2 px-4 ">
+              <button className=" hover:text-orange-600 font-bold md:py-2 px-4 text-orange-700">
                 Save Draft
               </button>
               <Link href="/VolunteerProfile/Opportunity/CreateopportintyFilter">
-                <Button className="bg-green-500 hover:bg-green-400  font-bold py-2 px-4 rounded-r-full text-white">
+                <Button className="bg-orange-500 hover:bg-orange-400  font-bold px-4 py-6 rounded-r-full text-white">
                   Next
                 </Button>
               </Link>

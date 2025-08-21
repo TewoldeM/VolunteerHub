@@ -7,13 +7,24 @@ import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 
 const CreateOpportunityDateTimeHeader = () => {
-  const [open, setOpen] = useState(false);
+  const [opendate, setOpendate] = useState(false);
+    const [openshift, setOpenshift] = useState(false);
+
   return (
     <div className="flex flex-col gap-2 items-center pb-4">
       <CreateOppHeader />
-      <Card className={cn("p-4")}>
-        <CreateOpportunitySpecificDate open={open} setOpen={setOpen} />
-        <CreateOpportunityShift open={open} setOpen={setOpen} />
+      <Card className={cn("p-8")}>
+        <h1 className="mb-8 text-3xl text-orange-600">
+          Add Date, Time And Shift(Optional)
+        </h1>
+        <CreateOpportunitySpecificDate
+          opendate={opendate}
+          setOpendate={setOpendate}
+        />
+        <CreateOpportunityShift
+          openshift={openshift}
+          setOpenshift={setOpenshift}
+        />
       </Card>
     </div>
   );

@@ -55,7 +55,7 @@ const navGroups = [
       },
       {
         label: "Opportunity Management",
-        link: "/organizations/opportunity-management",
+        link: "/VolunteerProfile/Opportunity/CreateopportunityAbout",
         icon: Calendar,
       },
       {
@@ -244,8 +244,8 @@ function NavbarItems({
       href={link}
       className={cn(
         buttonVariants({ variant: "ghost" }),
-        "w-full justify-start px-4 py-2 text-sm text-gray-800 hover:text-gray-600 text-left flex items-center",
-        pathname === link && "text-gray-600"
+        "w-full justify-start px-4 py-2 text-sm text-gray-800 hover:text-orange-600 text-left flex items-center",
+        pathname === link && "text-orange-600"
       )}
       onClick={onClickcallback}
     >

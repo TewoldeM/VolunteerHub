@@ -55,21 +55,37 @@ const CreateOrganaztion = () => {
     );
 
   return (
-    <div className="mt-32 mb-14 flex flex-col justify-center items-center">
+    <div className="mt-32 mb-14 flex flex-col">
+      <div className="flex justify-center items-center flex-col p-6 gap-4">
+        <h1 className="text-5xl text-orange-600 font-semibold">Welcome back </h1>
+        <p className="max-w-2xl text-lg p-2">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium
+          suscipit mollitia quibusdam doloremque a velit voluptatem minus,
+          pariatur hic? Doloribus. Lorem ipsum dolor sit amet consectetur
+          adipisicing elit. Laudantium suscipit mollitia quibusdam doloremque a
+          velit voluptatem minus, pariatur hic? Doloribus.
+        </p>
+      </div>
       {organizations.length > 0 ? (
-        <div className="flex justify-center items-center flex-row gap-8">
-          <Button onClick={handleDashboardofOrganization}>
+        <div className="flex justify-center items-center flex-row gap-8 ">
+          <Button
+            onClick={handleDashboardofOrganization}
+            className={cn("bg-orange-400 hover:bg-orange-500 p-6")}
+          >
             Go to Dashboard
           </Button>
-          <Button onClick={handleCreateAnotherOrganization}>
+          <Button
+            onClick={handleCreateAnotherOrganization}
+            className={cn("bg-orange-400 hover:bg-orange-500 p-6")}
+          >
             Create Organization
           </Button>
         </div>
       ) : (
         <div className="">
-            <Createorganazation />
-            <YouwillNeeded />
-            <GetStarted />
+          <Createorganazation />
+          <YouwillNeeded />
+          <GetStarted />
         </div>
       )}
     </div>

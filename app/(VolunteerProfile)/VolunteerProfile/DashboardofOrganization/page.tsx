@@ -35,25 +35,25 @@ const DashboardOfOrganization = () => {
     router.push("/VolunteerProfile/CreateAnotherOrganization");
   };
   return (
-    <div className="flex flex-col px-4 py-12 gap-4 ">
-      <div>
+    <div className="flex flex-col px-8 py-12 gap-4 h-screen">
+      <div className="p-12">
         <DataTable
           columns={user ? columns(user.name) : []}
           data={organizations}
         />
       </div>
-      <div className="flex flex-row justify-end items-center gap-10">
+      <div className="flex flex-row justify-end items-center gap-10 mt-4 px-8">
         <Link href="/VolunteerProfile/Opportunity/CreateopportunityAbout">
           <Button
             variant={"outline"}
-            className="border-emerald-500 bg-emerald-700 dark:bg-emerald-950 text-white hover:bg-emerald-500 hover:text-white"
+            className="border-orange-500 bg-orange-600 dark:bg-orange-950 text-white hover:bg-orange-500 hover:text-white"
           >
             Create Opportunity
           </Button>
         </Link>
         <Button
           variant={"outline"}
-          className="border-emerald-500 bg-emerald-700 dark:bg-emerald-950 text-white hover:bg-emerald-500 hover:text-white"
+          className="border-orange-500 bg-orange-600 dark:bg-orange-950 text-white hover:bg-orange-500 hover:text-white"
           onClick={handleCreateAnotherOrganization}
         >
           Create Another organization

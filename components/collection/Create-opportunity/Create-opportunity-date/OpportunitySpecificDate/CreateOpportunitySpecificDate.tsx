@@ -5,38 +5,40 @@ import CreateOpportunityDialogSpecificDateForyes from "./CreateOpportunityDialog
 import CreateOpportunityDialogSpecificDateForNo from "./CreateOpportunityDialogSpecificDateForNo";
 
 interface DialogProps {
-  open: boolean;
-  setOpen: (arg: boolean) => void;
+  opendate: boolean;
+  setOpendate: (arg: boolean) => void;
 }
 
-const CreateOpportunitySpecificdate = ({ open, setOpen }: DialogProps) => {
-  const itemsDate = [{label: "Yes",},{label: "No",}];
-  const [checked, setChecked] = useState(false);
+const CreateOpportunitySpecificdate = ({
+  opendate,
+  setOpendate,
+}: DialogProps) => {
+  const [showDialog, setShowDialog] = useState(false);
   const [selected, setSelected] = useState("");
 
+  const itemsDate = [{ label: "Yes" }, { label: "No" }];
+
   const handleOpenDialog = (label: string) => {
+    setSelected(label);
     if (label === "Yes") {
-      setOpen(true);
-      setSelected(label);
-    } else {
-      setOpen(false);
-      setSelected(label);
+      setOpendate(true);
+    } else if (label === "No") {
+      setShowDialog(true); // Open the "No" dialog
     }
   };
 
   return (
-    <div className="flex flex-col items-center mt-4">
-      <h1 className="mb-8 text-3xl dark:text-white">Add Date, Time And Shift(Optional) </h1>
-      <h2 className="text-lg  md:text-2xl  font-semibold items-center justify-center dark:text-gray-100">
-        Are specific Date for this opportunity
+    <div className="flex flex-col items-center mt-4 bg-orange-50 p-6">
+      <h2 className="text-lg md:text-2xl font-semibold items-center justify-center text-orange-400">
+        Are there specific dates for this opportunity?
       </h2>
       <div className="flex flex-wrap gap-8 justify-center">
         {itemsDate.map((itemDate, index) => (
           <div
             key={index}
-            className="relative w-20 h-20 p-2  md:w-32 md:h-32 md:p-1 flex flex-col items-center cursor-pointer"
+            className="relative w-20 h-20 p-2 md:w-32 md:h-32 md:p-1 flex flex-col items-center cursor-pointer"
           >
-            <span className="mt-4 text-xl  text-center">{itemDate.label}</span>
+            <span className="mt-4 text-xl text-center">{itemDate.label}</span>
             <div className="mt-2">
               <Checkbox
                 checked={selected === itemDate.label}
@@ -46,18 +48,18 @@ const CreateOpportunitySpecificdate = ({ open, setOpen }: DialogProps) => {
           </div>
         ))}
       </div>
-
-      {selected === "No" && (
-        <CreateOpportunityDialogSpecificDateForNo
-          open={open}
-          setOpen={setOpen}
+      {selected === "Yes" && (
+        <CreateOpportunityDialogSpecificDateForyes
+          opendate={opendate}
+          setOpendate={setOpendate}
         />
       )}
-
-      <CreateOpportunityDialogSpecificDateForyes
-        open={open}
-        setOpen={setOpen}
-      />
+      {selected === "No" && (
+        <CreateOpportunityDialogSpecificDateForNo
+          opendate={showDialog}
+          setOpendate={setShowDialog}
+        />
+      )}
     </div>
   );
 };

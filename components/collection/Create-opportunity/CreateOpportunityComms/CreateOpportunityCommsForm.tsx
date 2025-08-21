@@ -20,7 +20,6 @@ import { cn } from "@/lib/utils";
 import CategoryList from "../../Create-organazation/CreateOrganization/CategoryList";
 import { Category } from "@prisma/client";
 import { Separator } from "@radix-ui/react-separator";
-// import CategoryList from "@/components/CategoryList"; // Import your CategoryList component
 
 const formSchema = z.object({
   name: z.string(),
@@ -64,47 +63,48 @@ const CreateOpportunityCommsForm = ({ open, setOpen }: DialogProps) => {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="flex justify-center items-center flex-col space-y-8  shadow-md py-4
-        "
+          className="flex flex-col items-center space-y-8 shadow-md py-4 max-w-2xl mx-auto"
         >
-          <h1 className="text-2xl -ml-96">Automate your communications</h1>
+          <h1 className="text-2xl font-semibold">
+            Automate your communications
+          </h1>
           <FormField
             control={form.control}
             name="name"
             render={({ field }) => (
-              <FormItem className="ml-8">
+              <FormItem>
                 <FormLabel>
                   Opportunity point of contact
                   <span className="text-red-500">*</span>
                 </FormLabel>
                 <FormControl>
                   <Input
-                    placeholder=""
+                    placeholder="Enter contact name"
                     {...field}
-                    className="px-72 dark:border-gray-500"
+                    className="w-full px-4 py-2 border rounded-md dark:border-gray-500"
                   />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
-          <Separator className={cn("bg-green-300")} />
-          <h1 className="text-2xl -ml-96">Screen interested volunteers</h1>
-          <h1 className="-ml-48">
-            Gather information from the volunteers when they make connection
+          <Separator className={cn("bg-gray-300 w-full")} />
+          <h1 className="text-2xl font-semibold">
+            Screen interested volunteers
           </h1>
-          <div className="flex flex-col gap-4 justify-center -ml-40">
-            <h2 className="-ml-32">Add a volunteer Questionnaire?</h2>
-            <div className="flex justify-center items-center flex-row mt-2">
+          <p className="text-center">
+            Gather information from the volunteers when they make connection
+          </p>
+          <div className="flex flex-col items-center gap-4">
+            <h2 className="text-lg">Add a volunteer Questionnaire?</h2>
+            <div className="flex gap-8">
               {itemsDate.map((itemDate, index) => (
                 <div
                   key={index}
-                  className="relative w-20 h-20 p-2 md:w-32 md:h-32 md:p-1 flex flex-col items-center cursor-pointer -mt-10"
+                  className="flex flex-col items-center cursor-pointer"
                 >
-                  <span className="mt-4 text-xl text-center -ml-80">
-                    {itemDate.label}
-                  </span>
-                  <div className="mt-2 -ml-80">
+                  <span className="text-xl text-center">{itemDate.label}</span>
+                  <div className="mt-2">
                     <Checkbox
                       checked={deactivateSelected.includes(itemDate.label)}
                       onClick={() => handleCheckboxClick(itemDate.label)}
@@ -115,7 +115,7 @@ const CreateOpportunityCommsForm = ({ open, setOpen }: DialogProps) => {
             </div>
           </div>
           {showCategoryList && (
-            <div className="flex flex-col gap-4">
+            <div className="w-full flex flex-col items-center gap-4">
               <CategoryList
                 selectedCategories={[]}
                 handleCategoryChange={function (category: Category): void {
@@ -123,43 +123,44 @@ const CreateOpportunityCommsForm = ({ open, setOpen }: DialogProps) => {
                 }}
               />
               <Button
-                className={cn("text-white bg-blue-500 hover:bg-blue-300")}
+                className="bg-orange-500 hover:bg-orange-400 text-white px-4 py-2 rounded"
                 onClick={handleAddShift}
               >
                 Create Custom Question
               </Button>
             </div>
           )}
-          {/* Conditionally render CategoryList */}
-          <Separator className={cn("bg-green-300")} />
-          <div className="flex flex-col justify-center items-center gap-6 -ml-40">
-            <h1 className="text-3xl -ml-80 md:-ml-64">Greet your volunteers</h1>
-            <span className="flex flex-col justify-center items-center gap-4">
-              <h1 className="-ml-24">
-                Automatically send volunteers an email after they connect You{" "}
-                <br />
-                can also manage your greetings in Greeting Manager
-              </h1>
-              <div className="flex flex-col gap-4 items-center -ml-96">
-                <h1 className="text-xl">Volunteer Greeting</h1>
-                <Button className={cn("-ml-24")}>Create</Button>
-              </div>
-            </span>
+          <Separator className={cn("bg-gray-300 w-full")} />
+          <div className="flex flex-col items-center gap-4">
+            <h1 className="text-2xl font-semibold">Greet your volunteers</h1>
+            <p className="text-center">
+              Automatically send volunteers an email after they connect. You can
+              also manage your greetings in Greeting Manager
+            </p>
+            <div className="flex flex-col items-center gap-2">
+              <h2 className="text-lg">Volunteer Greeting</h2>
+              <Button className="bg-orange-500 hover:bg-orange-400 text-white px-4 py-2 rounded">
+                Create
+              </Button>
+            </div>
           </div>
-          <div className="flex justify-between items-center gap-24 md:gap-64">
+
+
+
+          
+          <div className="flex justify-between items-center w-full gap-4 mt-6">
             <Link href="/VolunteerProfile/Opportunity/CreateopportintyFilter">
-              <Button className="bg-green-500 hover:bg-green-400  font-bold py-2 px-4 rounded-l-full text-white">
+              <Button className="bg-green-500 hover:bg-green-400 text-white px-4 py-2 rounded-l-full">
                 Previous
               </Button>
             </Link>
-
-            <div className="flex justify-end">
-              <button className=" hover:text-green-600 font-bold md:py-2 px-4 ">
+            <div className="flex gap-4">
+              <button className="text-green-600 hover:text-green-800 font-semibold px-4 py-2">
                 Save Draft
               </button>
               <Link href="/VolunteerProfile/Opportunity/CreateOpportunityComms">
-                <Button className="bg-green-500 hover:bg-green-400  font-bold py-2 px-4 rounded-r-full text-white">
-                  Finsh
+                <Button className="bg-green-500 hover:bg-green-400 text-white px-4 py-2 rounded-r-full">
+                  Finish
                 </Button>
               </Link>
             </div>

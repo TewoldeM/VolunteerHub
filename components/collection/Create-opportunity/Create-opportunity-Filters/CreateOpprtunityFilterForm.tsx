@@ -171,13 +171,13 @@ const CreateOpprtunityFilterForm = ({ open, setOpen }: DialogProps) => {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="flex justify-center items-center flex-col space-y-4 mt-4 shadow-md py-6 w-full  max-w-5xl mx-auto dark:border-2 border-gray-700"
+          className="flex justify-center items-center flex-col space-y-4 mt-4 shadow-md py-6 w-full max-w-5xl mx-auto dark:border-2 border-gray-700 bg-orange-50"
         >
-          <h1 className="text-2xl dark:text-gray-100 -ml-44">
+          <h1 className="text-2xl text-orange-700 -ml-44">
             Help Volunteer Find Your Opportunity
           </h1>
           <div className="flex flex-col justify-center items-center gap-6 -ml-24">
-            <h1 className="text-md -ml-48 ">
+            <h1 className="text-md -ml-48 text-orange-600">
               What kinds of volunteer could participate
             </h1>
             <div className="flex flex-col justify-center items-center gap-6">
@@ -187,7 +187,7 @@ const CreateOpprtunityFilterForm = ({ open, setOpen }: DialogProps) => {
                     key={index}
                     className="relative flex flex-col items-center justify-center w-20 h-20 p-2  md:w-42 md:h-32 md:p-1 cursor-pointer -mt-6 gap-2 ml-4"
                   >
-                    <span className="mt-4 text-sm dark:text-gray-100 text-center -ml-24">
+                    <span className="mt-4 text-sm text-orange-500 text-center -ml-24">
                       {itemDate.label}
                     </span>
                     <div className="-ml-24 ">
@@ -203,27 +203,38 @@ const CreateOpprtunityFilterForm = ({ open, setOpen }: DialogProps) => {
           </div>
           {selected.includes("Public Groups") ||
           selected.includes("Private Groups") ? (
-            <div className="flex flex-col px-28 gap-2 items-center py-2 bg-gray-50 -ml-4 shadow-md">
-              <h1 className="text-lg -ml-52">
+            <div className="flex flex-col px-28 gap-2 items-center py-2 bg-orange-100 -ml-4 shadow-md">
+              <h1 className="text-lg -ml-52 text-orange-600">
                 What is the size of your group? Select the range
               </h1>
               <div className="flex justify-center items-center md:flex-row gap-4 -ml-24">
                 <FormField
-                  name="max"
+                  name="mini"
                   control={form.control}
                   render={({ field }) => (
                     <FormItem className="flex flex-col justify-center items-center">
-                      <FormLabel className="-ml-40">Max</FormLabel>
+                      <FormLabel className="-ml-40 text-orange-500">
+                        Mini
+                      </FormLabel>
                       <FormControl>
                         <select
-                          value={selectedMax}
-                          onChange={(e: any) => handleMaxChange(e.target.value)}
+                          value={selectedMini}
+                          onChange={(e) => handleMiniChange(e.target.value)}
                           disabled={checked}
-                          className="dark:text-gray-100 border border-gray-500 rounded-none px-8 py-1"
+                          className="bg-orange-50 text-orange-500 border-orange-600 rounded-none px-8 py-1 "
                         >
-                          <option value="">Select maximum</option>
+                          <option
+                            value=""
+                            className="bg-orange-200 hover:bg-orange-800 hover:text-orange-400"
+                          >
+                            Select minimum
+                          </option>
                           {groupSizeOptions.map((option) => (
-                            <option key={option.value} value={option.value}>
+                            <option
+                              key={option.value}
+                              value={option.value}
+                              className="bg-orange-200 hover:bg-orange-800 hover:text-orange-400"
+                            >
                               {option.label}
                             </option>
                           ))}
@@ -239,17 +250,28 @@ const CreateOpprtunityFilterForm = ({ open, setOpen }: DialogProps) => {
                   control={form.control}
                   render={({ field }) => (
                     <FormItem className="flex flex-col justify-center items-center">
-                      <FormLabel className="-ml-40">Mini</FormLabel>
+                      <FormLabel className="-ml-40 text-orange-500">
+                        Max
+                      </FormLabel>
                       <FormControl>
                         <select
                           value={selectedMini}
                           onChange={(e) => handleMiniChange(e.target.value)}
                           disabled={checked}
-                          className="dark:text-gray-100 border border-gray-600 rounded-none px-8 py-1"
+                          className="bg-orange-50 text-orange-500 border-orange-600 rounded-none px-8 py-1 "
                         >
-                          <option value="">Select minimum</option>
+                          <option
+                            value=""
+                            className="bg-orange-200 hover:bg-orange-800 hover:text-orange-400"
+                          >
+                            Select Maximum
+                          </option>
                           {groupSizeOptions.map((option) => (
-                            <option key={option.value} value={option.value}>
+                            <option
+                              key={option.value}
+                              value={option.value}
+                              className="bg-orange-200 hover:bg-orange-800 hover:text-orange-400"
+                            >
                               {option.label}
                             </option>
                           ))}
@@ -273,27 +295,27 @@ const CreateOpprtunityFilterForm = ({ open, setOpen }: DialogProps) => {
                       }
                     }}
                   />
-                  <span className="cursor-pointer">Any</span>
+                  <span className="cursor-pointer text-orange-500">Any</span>
                 </div>
               </div>
             </div>
           ) : null}
-          <div className="flex flex-row items-center justify-center mt-4 bg-green-200 p-2">
+          <div className="flex flex-row items-center justify-center mt-4 bg-orange-200 p-2">
             <AlertCircle className="w-8 h-8 text-yellow-500 mr-2" />
-            <div className="text-sm text-gray-600">
+            <div className="text-sm text-orange-600 max-w-xl p-2 ">
               All Opportunity in VolunteerHub is consider as for adult. In the
               future,The filter is allwo <br /> for the peopel searching for
               activiatys meeting unique needs.
             </div>
           </div>
           {selected.includes("Private Groups") ? (
-            <div className="bg-gray-50 p-2 shadow-md">
-              <h1 className="text-lg border-b-2 border-gray-800 dark:border-gray-300 pb-2 mb-4">
+            <div className="bg-orange-100 p-2 shadow-md">
+              <h1 className="text-lg border-b-2 border-orange-600  text-orange-700 mb-2 py-2">
                 Private Groups
               </h1>{" "}
-              <div className="flex flex-row items-center justify-center bg-green-200 p-2 ">
+              <div className="flex flex-row items-center justify-center bg-orange-200 p-4">
                 <AlertCircle className="w-8 h-8 text-yellow-500 mr-2" />
-                <div className="text-sm text-gray-600">
+                <div className="text-sm text-orange-600 ">
                   <span className="text-red-400"> Learn More</span> about
                   Private Groupe opportunity Private Groupe opportunity
                   opportunity
@@ -301,7 +323,7 @@ const CreateOpprtunityFilterForm = ({ open, setOpen }: DialogProps) => {
               </div>
               <div className="flex flex-col justify-center items-center -ml-40">
                 <div className="flex flex-col gap-4 justify-center items-cente -ml-4">
-                  <h1>
+                  <h1 className="text-orange-600 text-lg">
                     Is this Opportunity ONLY for private Groups?{" "}
                     <span className="text-red-400">*</span>
                   </h1>
@@ -334,8 +356,8 @@ const CreateOpprtunityFilterForm = ({ open, setOpen }: DialogProps) => {
                 </div>
 
                 <div className="flex flex-col gap-4 justify-center items-center  -ml-1">
-                  <h1>
-                    Does this private group Opportunity Require A Donation?{" "}
+                  <h1 className="text-orange-600 text-lg">
+                    Does this group Opportunity Require A Donation?{" "}
                     <span className="text-red-400">*</span>
                   </h1>
                   <div className="flex flex-wrap gap-4 justify-center ml-8">

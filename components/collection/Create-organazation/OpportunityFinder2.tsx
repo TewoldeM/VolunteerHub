@@ -98,7 +98,7 @@ export default function Home() {
   ];
 
   return (
-    <div className="min-h-screen bg-orange-50 dark:bg-gray-950 p-4 sm:p-6 md:p-8 lg:p-12 mx-12">
+    <div className="min-h-screen bg-orange-50 dark:bg-gray-950 p-4 sm:p-6 md:p-8 lg:p-12 mx-12 mb-12">
       {/* Header */}
       <div className="bg-orange-500 text-white text-center py-4 rounded-lg mb-6">
         <h2 className="text-xl sm:text-2xl font-bold">

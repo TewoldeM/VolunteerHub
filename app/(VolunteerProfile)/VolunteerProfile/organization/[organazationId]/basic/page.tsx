@@ -1,6 +1,6 @@
 import React from "react";
-import EditOrganizationForm from "@/components/collection/Create-organazation/EditOrganization/EditOrganization";
 import { getOrganization } from "@/app/lib/getOrganization";
+import EditOrganizationForm from "@/components/collection/Create-organazation/EditOrganization/EditOrganization";
 
 const Basics = async ({ params }: { params: { organazationId: string } }) => {
   if (!params) {

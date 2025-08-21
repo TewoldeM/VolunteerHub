@@ -106,7 +106,9 @@ const CreateOrganizationDialog = ({
       <DialogTrigger asChild>xxxx</DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Create a new organization</DialogTitle>
+          <DialogTitle className="text-orange-600 text-2xl font-semibold">
+            Create a new organization
+          </DialogTitle>
         </DialogHeader>
         <Form {...form}>
           <form className="space-y-4" onSubmit={form.handleSubmit(onSubmit)}>
@@ -115,11 +117,13 @@ const CreateOrganizationDialog = ({
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Name</FormLabel>
+                  <FormLabel className="text-orange-600 text-lg">
+                    Name
+                  </FormLabel>
                   <FormControl>
                     <Input {...field} />
                   </FormControl>
-                  <FormDescription>
+                  <FormDescription className="text-orange-500">
                     Organization Name (Required)
                   </FormDescription>
                 </FormItem>
@@ -130,7 +134,10 @@ const CreateOrganizationDialog = ({
               name="country"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Country</FormLabel>
+                  <FormLabel className="text-orange-600 text-lg">
+                    {" "}
+                    Country
+                  </FormLabel>
                   <FormControl>
                     <Countryselector
                       value={field.value}
@@ -139,7 +146,10 @@ const CreateOrganizationDialog = ({
                       }}
                     />
                   </FormControl>
-                  <FormDescription>Country (Required)</FormDescription>
+                  <FormDescription className="text-orange-500">
+                    {" "}
+                    Country (Required)
+                  </FormDescription>
                 </FormItem>
               )}
             />
@@ -148,11 +158,17 @@ const CreateOrganizationDialog = ({
               name="postalcode"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Postal Code</FormLabel>
+                  <FormLabel className="text-orange-600 text-lg">
+                    {" "}
+                    Postal Code
+                  </FormLabel>
                   <FormControl>
                     <Input {...field} type="number" />
                   </FormControl>
-                  <FormDescription>Postal Code (Required)</FormDescription>
+                  <FormDescription className="text-orange-500">
+                    {" "}
+                    Postal Code (Required)
+                  </FormDescription>
                 </FormItem>
               )}
             />
@@ -166,11 +182,17 @@ const CreateOrganizationDialog = ({
               onClick={() => {
                 form.reset();
               }}
+              className="bg-red-500 hover:bg-red-600 text-white"
             >
               cancel
             </Button>
           </DialogClose>
-          <Button onClick={form.handleSubmit(onSubmit)}>Create</Button>
+          <Button
+            onClick={form.handleSubmit(onSubmit)}
+            className="bg-green-500 hover:bg-green-600 text-white"
+          >
+            Create
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
